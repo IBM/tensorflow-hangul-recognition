@@ -99,3 +99,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Ignore font files
+*.ttf
+
+.DS_Store
