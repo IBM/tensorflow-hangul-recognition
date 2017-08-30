@@ -6,9 +6,8 @@ import io
 import os
 import random
 
-from PIL import Image, ImageFont, ImageDraw
-
 import numpy
+from PIL import Image, ImageFont, ImageDraw
 from scipy.ndimage.interpolation import map_coordinates
 from scipy.ndimage.filters import gaussian_filter
 
@@ -142,6 +141,6 @@ if __name__ == '__main__':
                         help='Directory of ttf fonts to use.')
     parser.add_argument('--output-dir', type=str, dest='output_dir',
                         default=DEFAULT_OUTPUT_DIR,
-                        help='Output direcotry to store generated images.')
+                        help='Output directory to store generated images.')
     args = parser.parse_args()
     generate_hangul_images(args.label_dir, args.fonts_dir, args.output_dir)
