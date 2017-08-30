@@ -63,13 +63,14 @@ Optional flags for this are:
 
 * `--label-file` for specifying a different label file (perhaps with less characters).
   Default is ./labels/2350-common-hangul.txt.
-* `--font-dir` for specifying a different fonts directory. Default is _./fonts_
+* `--font-dir` for specifying a different fonts directory. Default is _./fonts_.
 * `--output-dir` for specifying the output directory to store generated images.
-  Default is _./image-data_
+  Default is _./image-data_.
 
 Depending on how many labels and fonts there are, this script may take a while
 to complete. In order to bolster the dataset, random elastic distortions are also
-performed on each generated character image. An example is shown below:
+performed on each generated character image. An example is shown below, with the
+original character displayed first, followed by three elastic distortions.
 
 ![Normal Image](doc/source/images/hangul_normal.jpeg "Normal font character image")
 ![Distorted Image 1](doc/source/images/hangul_distorted1.jpeg "Distorted font character image")
