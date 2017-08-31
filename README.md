@@ -109,7 +109,8 @@ directories created earlier.
 
 ```
 python build_image_data.py --train_directory=./image-data/train-images \
-    --validation_directory=./image-data/test-images --output_directory=./output \
+    --validation_directory=./image-data/test-images \
+    --output_directory=./tfrecords-output \
     --labels_file=./labels/2350-common-hangul.txt --train_shards=6
 ```
 

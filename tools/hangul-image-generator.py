@@ -133,7 +133,7 @@ def elastic_distort(image, alpha, sigma):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--label-file', type=str, dest='label_dir',
+    parser.add_argument('--label-file', type=str, dest='label_file',
                         default=DEFAULT_LABEL_FILE,
                         help='File containing newline delimited labels.')
     parser.add_argument('--font-dir', type=str, dest='fonts_dir',
@@ -143,4 +143,4 @@ if __name__ == '__main__':
                         default=DEFAULT_OUTPUT_DIR,
                         help='Output directory to store generated images.')
     args = parser.parse_args()
-    generate_hangul_images(args.label_dir, args.fonts_dir, args.output_dir)
+    generate_hangul_images(args.label_file, args.fonts_dir, args.output_dir)
