@@ -54,10 +54,13 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
     # Get a list of the fonts.
     fonts = glob.glob(os.path.join(fonts_dir, '*.ttf'))
 
-    count = 0
+    total_count = 0
+    prev_count = 0
     for character in labels:
-        count += 1
-        subcount = 0
+        # Print image count roughly every 5000 images.
+        if total_count - prev_count > 5000:
+            prev_count = total_count
+            print('{} images generated...'.format(total_count))
 
         # Create directory for current character.
         train_char_dir = os.path.join(train_dir, character)
@@ -70,7 +73,7 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
         # Loop through each font, creating several different images of each
         # character.
         for font in fonts:
-            subcount += 1
+            total_count += 1
             image = Image.new('L', (IMAGE_WIDTH, IMAGE_HEIGHT), color=0)
             font = ImageFont.truetype(font, 48)
             drawing = ImageDraw.Draw(image)
@@ -81,7 +84,7 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
                 fill=(255),
                 font=font
             )
-            file_string = 'hangul_{}_{}.jpeg'.format(count, subcount)
+            file_string = 'hangul_{}.jpeg'.format(total_count)
 
             # Randomly assign roughly 10% of the images to the testing set.
             if random.randint(0, 9) < 1:
@@ -92,7 +95,8 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
             image.save(file_path, 'JPEG')
 
             for i in range(DISTORTION_COUNT):
-                file_string = 'hangul_{}_{}_{}.jpeg'.format(count, subcount, i)
+                total_count += 1
+                file_string = 'hangul_{}.jpeg'.format(total_count)
                 if random.randint(0, 9) < 1:
                     file_path = os.path.join(test_char_dir, file_string)
                 else:
@@ -105,7 +109,7 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
                 )
                 distorted_image = Image.fromarray(distorted_array)
                 distorted_image.save(file_path, 'JPEG')
-
+    print('Finished generating {} images.'.format(total_count))
 
 def elastic_distort(image, alpha, sigma):
     """Perform elastic distortion on an image.
