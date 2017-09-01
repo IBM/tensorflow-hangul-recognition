@@ -15,7 +15,7 @@ SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_LABEL_FILE = os.path.join(SCRIPT_PATH,
                                   './labels/2350-common-hangul.txt')
 DEFAULT_TFRECORDS_DIR = os.path.join(SCRIPT_PATH, 'tfrecords-output')
-DEFAULT_OUTPUT_DIR = os.path.join(SCRIPT_PATH, 'saved_model')
+DEFAULT_OUTPUT_DIR = os.path.join(SCRIPT_PATH, 'saved-model')
 
 MODEL_NAME = 'hangul_tensorflow'
 IMAGE_WIDTH = 64
@@ -121,9 +121,9 @@ def main(label_file, tfrecords_dir, model_output_dir):
     """Perform graph definition and model training.
 
     Here we will first create our input pipeline for reading in TFRecords
-    files, and producing random batches of images and labels.
+    files and producing random batches of images and labels.
     Next, a convolutional neural network is defined, and training is performed.
-    After training the model is exported to be used in applications.
+    After training, the model is exported to be used in applications.
     """
     labels = io.open(label_file, 'r', encoding='utf-8').read().splitlines()
     num_classes = len(labels)
@@ -225,7 +225,9 @@ def main(label_file, tfrecords_dir, model_output_dir):
     )
 
     # Define our optimizer for minimizing our loss. Here we choose a learning
-    # rate of 0.0001.
+    # rate of 0.0001 with AdamOptimizer.  AdamOptimizer. This utilizes someting
+    # called the Adam algorithm, and utilizes adaptive learning rates and
+    # momentum to get past saddle points.
     train_step = tf.train.AdamOptimizer(0.0001).minimize(cross_entropy)
 
     # Define accuracy.
