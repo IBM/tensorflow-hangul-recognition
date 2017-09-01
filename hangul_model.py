@@ -225,7 +225,7 @@ def main(label_file, tfrecords_dir, model_output_dir):
     )
 
     # Define our optimizer for minimizing our loss. Here we choose a learning
-    # rate of 0.0001 with AdamOptimizer.  AdamOptimizer. This utilizes someting
+    # rate of 0.0001 with AdamOptimizer. This utilizes someting
     # called the Adam algorithm, and utilizes adaptive learning rates and
     # momentum to get past saddle points.
     train_step = tf.train.AdamOptimizer(0.0001).minimize(cross_entropy)
