@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="hangultensordroid.ibm.org.tensorflowhangulrecognition.MainActivity">
+
+
+    <hangultensordroid.ibm.org.tensorflowhangulrecognition.PaintView
+        android:id="@+id/paintView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clear" />
+
+        <Button
+            android:id="@+id/button_backspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backspace" />
+
+        <Button
+            android:id="@+id/button_classify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/classify" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:inputType="textPersonName"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:focusable="false"
+        android:clickable="false"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <LinearLayout
+        android:id="@+id/altLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="0dp">
+
+        <Button
+            android:id="@+id/alt1"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text=""
+            android:tag="1"/>
+
+        <Button
+            android:id="@+id/alt2"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text=""
+            android:tag="2"/>
+
+        <Button
+            android:id="@+id/alt3"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text=""
+            android:tag="3"/>
+
+        <Button
+            android:id="@+id/alt4"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text=""
+            android:tag="4"/>
+    </LinearLayout>
+
+</LinearLayout>
