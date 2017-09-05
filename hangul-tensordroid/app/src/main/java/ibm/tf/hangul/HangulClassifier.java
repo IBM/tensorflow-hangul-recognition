@@ -1,4 +1,4 @@
-package hangultensordroid.ibm.org.tensorflowhangulrecognition;
+package ibm.tf.hangul;
 
 import android.content.res.AssetManager;
 import java.io.BufferedReader;

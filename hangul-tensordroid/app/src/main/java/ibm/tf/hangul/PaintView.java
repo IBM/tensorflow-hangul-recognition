@@ -1,4 +1,4 @@
-package hangultensordroid.ibm.org.tensorflowhangulrecognition;
+package ibm.tf.hangul;
 
 import android.content.Context;
 import android.graphics.Bitmap;

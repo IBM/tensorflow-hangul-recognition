@@ -1,4 +1,4 @@
-package hangultensordroid.ibm.org.tensorflowhangulrecognition;
+package ibm.tf.hangul;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

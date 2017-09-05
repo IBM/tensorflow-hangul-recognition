@@ -9,10 +9,10 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="hangultensordroid.ibm.org.tensorflowhangulrecognition.MainActivity">
+    tools:context=".MainActivity">
 
 
-    <hangultensordroid.ibm.org.tensorflowhangulrecognition.PaintView
+    <ibm.tf.hangul.PaintView
         android:id="@+id/paintView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
