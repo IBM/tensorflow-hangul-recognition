@@ -3,4 +3,7 @@
     <string name="backspace">\u232B</string>
     <string name="classify">Classify</string>
     <string name="clear">Clear</string>
+    <string name="draw">Draw Here</string>
+    <string name="space">\u2423</string>
+    <string name="submit">\u27A4</string>
 </resources>

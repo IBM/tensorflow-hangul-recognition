@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button alt1, alt2, alt3, alt4;
     private LinearLayout altLayout;
     private EditText resultText;
+    private TextView translationText;
     private String[] currentTopLabels;
 
     @Override
@@ -27,14 +31,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         paintView = (PaintView) findViewById(R.id.paintView);
 
-        Button clearButton = (Button) findViewById(R.id.button_clear);
+        TextView drawHereText = (TextView) findViewById(R.id.drawHere);
+        paintView.setDrawText(drawHereText);
+
+        Button clearButton = (Button) findViewById(R.id.buttonClear);
         clearButton.setOnClickListener(this);
 
-        Button classifyButton = (Button) findViewById(R.id.button_classify);
+        Button classifyButton = (Button) findViewById(R.id.buttonClassify);
         classifyButton.setOnClickListener(this);
 
-        Button backspaceButton = (Button) findViewById(R.id.button_backspace);
+        Button backspaceButton = (Button) findViewById(R.id.buttonBackspace);
         backspaceButton.setOnClickListener(this);
+
+        Button spaceButton = (Button) findViewById(R.id.buttonSpace);
+        spaceButton.setOnClickListener(this);
+
+        Button submitButton = (Button) findViewById(R.id.buttonSubmit);
+        submitButton.setOnClickListener(this);
 
         altLayout = (LinearLayout) findViewById(R.id.altLayout);
         altLayout.setVisibility(View.INVISIBLE);
@@ -48,26 +61,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alt4 = (Button) findViewById(R.id.alt4);
         alt4.setOnClickListener(this);
 
+        translationText = (TextView) findViewById(R.id.translationText);
         resultText = (EditText) findViewById(R.id.editText);
+
         loadModel();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_clear:
+            case R.id.buttonClear:
                 clear();
                 break;
-            case R.id.button_classify:
+            case R.id.buttonClassify:
                 classify();
                 paintView.reset();
                 paintView.invalidate();
                 break;
-            case R.id.button_backspace:
+            case R.id.buttonBackspace:
                 backspace();
                 altLayout.setVisibility(View.INVISIBLE);
                 paintView.reset();
                 paintView.invalidate();
+                break;
+            case R.id.buttonSpace:
+                space();
+                break;
+            case R.id.buttonSubmit:
+                altLayout.setVisibility(View.INVISIBLE);
+                translate();
                 break;
             case R.id.alt1:
             case R.id.alt2:
@@ -85,10 +107,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void space() {
+        resultText.append(" ");
+    }
+
     private void clear() {
         paintView.reset();
         paintView.invalidate();
         resultText.setText("");
+        translationText.setText("");
         altLayout.setVisibility(View.INVISIBLE);
     }
 
@@ -101,6 +128,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alt2.setText(currentTopLabels[2]);
         alt3.setText(currentTopLabels[3]);
         alt4.setText(currentTopLabels[4]);
+    }
+
+    private void translate() {
+        String text = resultText.getText().toString();
+        if (text.isEmpty()) {
+            return;
+        }
+
+        HashMap<String, String> postData = new HashMap<>();
+        postData.put("text", text);
+        postData.put("source", "ko");
+        postData.put("target", "en");
+        HangulTranslator translator = new HangulTranslator(postData, translationText);
+        translator.execute();
     }
 
     /**

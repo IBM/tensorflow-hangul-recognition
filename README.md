@@ -10,6 +10,8 @@ In this application, users will be able to draw a Korean syllable on their
 phone, and the application will attempt to infer what the character is by using
 the trained model.
 
+![Demo App](doc/source/images/hangul_tensordroid_demo1.gif "Android application")
+
 The following steps will be covered:
 1. Generating image data using free Hangul-supported fonts found online and
    elastic distortion.

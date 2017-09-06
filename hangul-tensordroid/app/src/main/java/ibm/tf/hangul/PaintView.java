@@ -24,7 +24,7 @@ public class PaintView extends View {
     // Length in pixels of each dimension for the bitmap to be fed into the model.
     public static final int FEED_DIMENSION = 64;
 
-    private boolean setup;
+    private boolean setup, drawHere;
 
     private Paint paint;
     private Bitmap bitmap;
@@ -37,6 +37,7 @@ public class PaintView extends View {
     private PointF pointF = new PointF();
 
     private ArrayList<PaintPath> PaintPathList = new ArrayList<>();
+    private View drawTextView;
 
     public PaintView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -58,9 +59,14 @@ public class PaintView extends View {
         }
     }
 
+    public void setDrawText(View view) {
+        drawTextView = view;
+        drawHere = true;
+    }
+
     private void setupScaleMatrices() {
 
-        // View/Screen size
+        // View size.
         float width = getWidth();
         float height = getHeight();
         float scaleW = width / BITMAP_DIMENSION;
@@ -124,6 +130,10 @@ public class PaintView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (drawHere) {
+            drawTextView.setVisibility(View.INVISIBLE);
+            drawHere = false;
+        }
         PaintPath paintPath = new PaintPath();
         canvas.drawPath(path, paint);
 

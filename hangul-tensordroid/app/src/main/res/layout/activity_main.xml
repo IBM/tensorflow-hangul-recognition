@@ -9,14 +9,33 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:weightSum="1">
 
 
-    <ibm.tf.hangul.PaintView
-        android:id="@+id/paintView"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/paintViewLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <ibm.tf.hangul.PaintView
+            android:id="@+id/paintView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/drawHere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/draw"
+            android:textColor="@color/Gray"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/buttonLayout"
@@ -25,35 +44,62 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button_clear"
-            android:layout_width="wrap_content"
+            android:id="@+id/buttonClear"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/clear" />
 
         <Button
-            android:id="@+id/button_backspace"
-            android:layout_width="wrap_content"
+            android:id="@+id/buttonSpace"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:text="@string/space" />
+
+        <Button
+            android:id="@+id/buttonBackspace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
             android:text="@string/backspace" />
 
         <Button
-            android:id="@+id/button_classify"
-            android:layout_width="wrap_content"
+            android:id="@+id/buttonClassify"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/classify" />
+            android:layout_weight="1"
+            android:text="@string/classify"/>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editText"
+    <LinearLayout
+        android:id="@+id/textLayout"
         android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:inputType="textPersonName"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:focusable="false"
-        android:clickable="false"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:clickable="false"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:backgroundTint="@android:color/darker_gray"
+            android:layout_weight=".85"/>
+
+        <Button
+            android:id="@+id/buttonSubmit"
+            android:layout_width="0dp"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_weight=".15"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/altLayout"
@@ -68,32 +114,40 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:text=""
-            android:tag="1"/>
+            android:tag="1"
+            android:text="" />
 
         <Button
             android:id="@+id/alt2"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:text=""
-            android:tag="2"/>
+            android:tag="2"
+            android:text="" />
 
         <Button
             android:id="@+id/alt3"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:text=""
-            android:tag="3"/>
+            android:tag="3"
+            android:text="" />
 
         <Button
             android:id="@+id/alt4"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:text=""
-            android:tag="4"/>
+            android:tag="4"
+            android:text="" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/translationText"
+        android:textSize="24sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.23"
+        android:text="" />
 
 </LinearLayout>
