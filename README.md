@@ -8,7 +8,10 @@ This journey will cover the creation process of an Android application that
 will utilize a TensorFlow model trained to recognize Korean syllables.
 In this application, users will be able to draw a Korean syllable on their
 phone, and the application will attempt to infer what the character is by using
-the trained model.
+the trained model. Furthermore, users will be able to form words or sentences in
+the application which they can then translate using the
+[Watson Language Translator](https://www.ibm.com/watson/services/language-translator/)
+service.
 
 ![Demo App](doc/source/images/hangul_tensordroid_demo1.gif "Android application")
 
@@ -19,6 +22,7 @@ The following steps will be covered:
    the model.
 3. Training and saving the model.
 4. Using the saved model in a simple Android application.
+5. Connecting the Watson Language Translator service to translate the characters.
 
 
 ## Prerequisites
@@ -48,7 +52,13 @@ for each character provided
 in the given labels file. The default labels file is
 [2350-common-hangul.txt](./labels/2350-common-hangul.txt)
 which contains 2350 frequent characters derived from the
-[KS X 1001 encoding](https://en.wikipedia.org/wiki/KS_X_1001).
+[KS X 1001 encoding](https://en.wikipedia.org/wiki/KS_X_1001). Other label files
+are [256-common-hangul.txt](./labels/256-common-hangul.txt) and
+[512-common-hangul.txt](./labels/512-common-hangul.txt). These were adapted from
+the top 6000 Korean words compiled by the National Institute of Korean Language
+listed [here](https://www.topikguide.com/download/6000_korean_words.htm).
+If you don't have a powerful machine to train on, using a smaller label set can
+help reduce the amount of model training time later on.
 
 The [fonts](./fonts) folder is currently empty, so before you can generate the
 Hangul dataset, you must first download
@@ -139,7 +149,7 @@ batches of images and labels. Next, a convolutional neural network (CNN) is
 defined, and training is performed. After training, the model is exported
 so that it can be used in our Android application.
 
-The model here is similar to one described on the TensorFlow
+The model here is similar to the MNIST model described on the TensorFlow
 [website](https://www.tensorflow.org/get_started/mnist/pros). A third
 convolutional layer is added to extract more features to help classify for the
 much greater number of classes.
