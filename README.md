@@ -74,7 +74,7 @@ then you can proceed with the actual image generation:
 Optional flags for this are:
 
 * `--label-file` for specifying a different label file (perhaps with less characters).
-  Default is ./labels/2350-common-hangul.txt.
+  Default is _./labels/2350-common-hangul.txt_.
 * `--font-dir` for specifying a different fonts directory. Default is _./fonts_.
 * `--output-dir` for specifying the output directory to store generated images.
   Default is _./image-data_.
@@ -164,9 +164,9 @@ Optional flags for this script are:
 
 * `--label-file` for specifying the labels that correspond to your training set.
   This is used by the script to determine the number of classes to classify for.
-  Default is ./labels/2350-common-hangul.txt.
+  Default is _./labels/2350-common-hangul.txt_.
 * `--tfrecords-dir` for specifying the directory containing the TFRecords shards.
-  Default is _./tfrecords-output.
+  Default is _./tfrecords-output_.
 * `--output-dir` for specifying the output directory to store model checkpoints,
    graphs, and Protocol Buffer files. Default is _./saved-model_.
 
@@ -197,6 +197,38 @@ be saved, by default, as `./saved-model/optimized_hangul_tensorflow.pb`. This is
 a [Protocol Buffer](https://en.wikipedia.org/wiki/Protocol_Buffers) file
 which represents a serialized version of our model with all the learned weights
 and biases. This specific one is optimized for inference-only usage.
+
+## Trying Out the Model
+
+Before we jump into making an Android application with our newly saved model,
+let's first try it out. Provided is a script that will load your model and use it
+for inference on a given image. Try it out on images of your own, or download some
+of the sample images below. Just make sure each image is 64x64 pixels with a
+black background and white character color.
+
+```
+./tools/classify-hangul.py <Image Path>
+```
+
+Optional flags for this are:
+
+* `--label-file` for specifying a different label file. This is used to map indices
+  in the one-hot label representations to actual characters.
+  Default is ./labels/2350-common-hangul.txt.
+* `--graph-file` for specifying your saved model file.
+  Default is _./saved-model/optimized_hangul_tensorflow.pb_.
+
+***Sample Images:***
+
+![Sample Image 1](doc/source/images/hangul_sample1.jpeg "Sample image")
+![Sample Image 2](doc/source/images/hangul_sample2.jpeg "Sample image")
+![Sample Image 3](doc/source/images/hangul_sample3.jpeg "Sample image")
+![Sample Image 4](doc/source/images/hangul_sample4.jpeg "Sample image")
+![Sample Image 5](doc/source/images/hangul_sample5.jpeg "Sample image")
+
+After running the script, you should see the top five predictions and their
+corresponding scores. Hopefully the top prediction matches what your character
+actually is.
 
 
 ## Creating the Android Application

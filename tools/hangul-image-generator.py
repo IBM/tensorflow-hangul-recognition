@@ -111,6 +111,7 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
                 distorted_image.save(file_path, 'JPEG')
     print('Finished generating {} images.'.format(total_count))
 
+
 def elastic_distort(image, alpha, sigma):
     """Perform elastic distortion on an image.
 
