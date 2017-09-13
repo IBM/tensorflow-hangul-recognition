@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import csv
 import glob
 import io
 import os
@@ -20,11 +21,6 @@ DEFAULT_LABEL_FILE = os.path.join(SCRIPT_PATH,
 DEFAULT_FONTS_DIR = os.path.join(SCRIPT_PATH, '../fonts')
 DEFAULT_OUTPUT_DIR = os.path.join(SCRIPT_PATH, '../image-data')
 
-# Subdirectory names that will be created in the output directory for
-# partitioning the training set and testing set.
-TRAIN_IMAGES_DIR = 'train-images'
-TEST_IMAGES_DIR = 'test-images'
-
 # Number of random distortion images to generate per font and character.
 DISTORTION_COUNT = 3
 
@@ -39,20 +35,21 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
     This will take in the passed in labels file and will generate several
     images using the font files provided in the font directory. The font
     directory is expected to be populated with *.ttf (True Type Font) files.
-    The generated images will be stored in the given output directory.
+    The generated images will be stored in the given output directory. Image
+    paths will have their corresponding labels listed in a CSV file.
     """
     labels = io.open(label_file, 'r', encoding='utf-8').read().splitlines()
 
-    train_dir = os.path.join(output_dir, TRAIN_IMAGES_DIR)
-    if not os.path.exists(train_dir):
-        os.makedirs(os.path.join(train_dir))
-
-    test_dir = os.path.join(output_dir, TEST_IMAGES_DIR)
-    if not os.path.exists(test_dir):
-        os.makedirs(test_dir)
+    image_dir = os.path.join(output_dir, 'hangul-images')
+    if not os.path.exists(image_dir):
+        os.makedirs(os.path.join(image_dir))
 
     # Get a list of the fonts.
     fonts = glob.glob(os.path.join(fonts_dir, '*.ttf'))
+
+    labels_csv = io.open(os.path.join(output_dir, 'labels-map.csv'), 'w',
+                         encoding='utf-8')
+    csv_writer = csv.writer(labels_csv, delimiter=',', quotechar='"')
 
     total_count = 0
     prev_count = 0
@@ -62,16 +59,6 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
             prev_count = total_count
             print('{} images generated...'.format(total_count))
 
-        # Create directory for current character.
-        train_char_dir = os.path.join(train_dir, character)
-        test_char_dir = os.path.join(test_dir, character)
-        if not os.path.exists(train_char_dir):
-            os.makedirs(train_char_dir)
-        if not os.path.exists(test_char_dir):
-            os.makedirs(test_char_dir)
-
-        # Loop through each font, creating several different images of each
-        # character.
         for font in fonts:
             total_count += 1
             image = Image.new('L', (IMAGE_WIDTH, IMAGE_HEIGHT), color=0)
@@ -85,22 +72,14 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
                 font=font
             )
             file_string = 'hangul_{}.jpeg'.format(total_count)
-
-            # Randomly assign roughly 10% of the images to the testing set.
-            if random.randint(0, 9) < 1:
-                file_path = os.path.join(test_char_dir, file_string)
-            else:
-                file_path = os.path.join(train_char_dir, file_string)
-
+            file_path = os.path.join(image_dir, file_string)
             image.save(file_path, 'JPEG')
+            csv_writer.writerow([file_path, character])
 
             for i in range(DISTORTION_COUNT):
                 total_count += 1
                 file_string = 'hangul_{}.jpeg'.format(total_count)
-                if random.randint(0, 9) < 1:
-                    file_path = os.path.join(test_char_dir, file_string)
-                else:
-                    file_path = os.path.join(train_char_dir, file_string)
+                file_path = os.path.join(image_dir, file_string)
                 arr = numpy.array(image)
 
                 distorted_array = elastic_distort(
@@ -109,7 +88,10 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
                 )
                 distorted_image = Image.fromarray(distorted_array)
                 distorted_image.save(file_path, 'JPEG')
+                csv_writer.writerow([file_path, character])
+
     print('Finished generating {} images.'.format(total_count))
+    labels_csv.close()
 
 
 def elastic_distort(image, alpha, sigma):
@@ -146,6 +128,7 @@ if __name__ == '__main__':
                         help='Directory of ttf fonts to use.')
     parser.add_argument('--output-dir', type=str, dest='output_dir',
                         default=DEFAULT_OUTPUT_DIR,
-                        help='Output directory to store generated images.')
+                        help='Output directory to store generated images and '
+                             'label CSV file.')
     args = parser.parse_args()
     generate_hangul_images(args.label_file, args.fonts_dir, args.output_dir)

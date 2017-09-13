@@ -25,7 +25,7 @@ IMAGE_HEIGHT = 64
 # should cover several iterations over all of the training data (epochs).
 # Example: If you have 10000 images in the training set, one epoch would be
 # 15000/100 = 150 steps where 100 is the batch size.
-NUM_TRAIN_STEPS = 60000
+NUM_TRAIN_STEPS = 5000
 BATCH_SIZE = 100
 
 
@@ -48,7 +48,7 @@ def get_image(files, num_classes):
 
     # Parse the example to get a dict mapping feature keys to tensors.
     # image/class/label: integer denoting the index in a classification layer.
-    # image/encoded: string containing JPEG encoded image in RGB colorspace.
+    # image/encoded: string containing JPEG encoded image
     features = tf.parse_single_example(
         example,
         features={
@@ -61,13 +61,12 @@ def get_image(files, num_classes):
     image_encoded = features['image/encoded']
 
     # Decode the JPEG.
-    image = tf.image.decode_jpeg(image_encoded, channels=3)
+    image = tf.image.decode_jpeg(image_encoded, channels=1)
     image = tf.image.convert_image_dtype(image, dtype=tf.float32)
-    image = tf.reshape(tf.image.rgb_to_grayscale(image),
-                       [IMAGE_WIDTH*IMAGE_HEIGHT])
+    image = tf.reshape(image, [IMAGE_WIDTH*IMAGE_HEIGHT])
 
     # Represent the label as a one hot vector.
-    label = tf.stack(tf.one_hot(label-1, num_classes))
+    label = tf.stack(tf.one_hot(label, num_classes))
     return label, image
 
 
@@ -143,7 +142,7 @@ def main(label_file, tfrecords_dir, model_output_dir):
     train_data_files = tf.gfile.Glob(tf_record_pattern)
     label, image = get_image(train_data_files, num_classes)
 
-    tf_record_pattern = os.path.join(tfrecords_dir, '%s-*' % 'validation')
+    tf_record_pattern = os.path.join(tfrecords_dir, '%s-*' % 'test')
     test_data_files = tf.gfile.Glob(tf_record_pattern)
     tlabel, timage = get_image(test_data_files, num_classes)
 

@@ -89,55 +89,50 @@ original character displayed first, followed by three elastic distortions.
 ![Distorted Image 2](doc/source/images/hangul_distorted2.jpeg "Distorted font character image")
 ![Distorted Image 3](doc/source/images/hangul_distorted3.jpeg "Distorted font character image")
 
-Once the script is done, the output directory will contain a _test-images_ folder
-and a _train-images_ folder. This is just a partition to separate training data
-from testing data for when we train and test our model. Both of these image folders
-will contain several directories corresponding to the labels, and each of these
-label directories will contain several 64x64 JPEG images of the parent label.
+Once the script is done, the output directory will contain a _hangul-images_ folder
+which will hold all the 64x64 JPEG images. The output directory will also contain a
+_labels-map.csv_ file which will map all the image paths to their corresponding
+labels.
 
 
 ## Converting Images to TFRecords
 
 The TensorFlow standard input format is TFRecords, so in order to better feed in
-data to a TensorFlow Model, let's first create several TFRecords files from our
-images. Fortunately, there exists a
-[script](https://github.com/tensorflow/models/blob/master/inception/inception/data/build_image_data.py)
-that will do this for us in the tensorflow/models repository.
+data to a TensorFlow model, let's first create several TFRecords files from our
+images. A [script](./tools/convert-to-tfrecords.py) is provided that will do this
+for us.
 
-Download that script into the root of the project:
+This script will first partition the data so that we have a training set and
+also a testing set (15% testing, 85% training). Then it will read in
+all the image and label data based on the _labels-map.csv_ file that was
+generated above.
 
-```
-curl -O https://raw.githubusercontent.com/tensorflow/models/master/inception/inception/data/build_image_data.py
-```
-
-Create an output directory to store the TFRecords files:
+To run the script, you can simply do:
 
 ```
-mkdir ./tfrecords-output
+./tools/convert_to_tfrecords.py
 ```
 
-Then run the script while specifying the _test-images_ and _train-images_
-directories created earlier.
+Optional flags for this are:
 
-```
-python build_image_data.py --train_directory=./image-data/train-images \
-    --validation_directory=./image-data/test-images \
-    --output_directory=./tfrecords-output \
-    --labels_file=./labels/2350-common-hangul.txt --train_shards=6
-```
-
-Note: The value for `--train-shards` is the number of files to partition the training
-data into. This can be increased or decreased depending on how much data you have.
-It is used for splitting up the data so you don't just have one big file.
+* `--image-label-csv` for specifying the CSV file that maps image paths to labels.
+  Default is _./image-data/labels-map.csv_
+* `--label-file` for specifying the labels that correspond to your training set.
+  This is used by the script to determine the number of classes.
+  Default is _./labels/2350-common-hangul.txt_.
+* `--output-dir` for specifying the output directory to store TFRecords files.
+  Default is _./tfrecords-output_.
+* `--num-shards-train` for specifying the number of shards to divide training set
+  TFRecords into. Default is _3_.
+* `--num-shards-test` for specifying the number of shards to divide testing set
+  TFRecords into. Default is _1_.
 
 Once this script has completed, you should have sharded TFRecords files in the
 output directory _./tfrecords-output_.
 
 ```
 $ ls ./tfrecords-output
-train-00000-of-00006    train-00003-of-00006    validation-00000-of-00002
-train-00001-of-00006    train-00004-of-00006    validation-00001-of-00002
-train-00002-of-00006    train-00005-of-00006
+test1.tfrecords    train1.tfrecords    train2.tfrecords    train3.tfrecords
 ```
 
 ## Training the Model
@@ -214,7 +209,7 @@ Optional flags for this are:
 
 * `--label-file` for specifying a different label file. This is used to map indices
   in the one-hot label representations to actual characters.
-  Default is ./labels/2350-common-hangul.txt.
+  Default is _./labels/2350-common-hangul.txt_.
 * `--graph-file` for specifying your saved model file.
   Default is _./saved-model/optimized_hangul_tensorflow.pb_.
 
