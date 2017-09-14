@@ -68,7 +68,7 @@ used to improve your dataset. Once your fonts directory is populated,
 then you can proceed with the actual image generation:
 
 ```
-./tools/hangul-image-generator.py
+python ./tools/hangul-image-generator.py
 ```
 
 Optional flags for this are:
@@ -110,7 +110,7 @@ generated above.
 To run the script, you can simply do:
 
 ```
-./tools/convert_to_tfrecords.py
+python ./tools/convert_to_tfrecords.py
 ```
 
 Optional flags for this are:
@@ -202,7 +202,7 @@ of the sample images below. Just make sure each image is 64x64 pixels with a
 black background and white character color.
 
 ```
-./tools/classify-hangul.py <Image Path>
+python ./tools/classify-hangul.py <Image Path>
 ```
 
 Optional flags for this are:
@@ -224,6 +224,17 @@ Optional flags for this are:
 After running the script, you should see the top five predictions and their
 corresponding scores. Hopefully the top prediction matches what your character
 actually is.
+
+***Note***: If running this script on Windows, in order for the Korean characters
+to be displayed on the console, you must first change the active code page to
+support UTF-8. Just run:
+
+```
+chcp 65001
+```
+
+Then you must change the console font to be one that supports Korean text
+(like Batang, Dotum, or Gulim).
 
 
 ## Creating the Android Application

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import argparse
-import csv
 import glob
 import io
 import os
@@ -49,7 +48,6 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
 
     labels_csv = io.open(os.path.join(output_dir, 'labels-map.csv'), 'w',
                          encoding='utf-8')
-    csv_writer = csv.writer(labels_csv, delimiter=',', quotechar='"')
 
     total_count = 0
     prev_count = 0
@@ -74,7 +72,7 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
             file_string = 'hangul_{}.jpeg'.format(total_count)
             file_path = os.path.join(image_dir, file_string)
             image.save(file_path, 'JPEG')
-            csv_writer.writerow([file_path, character])
+            labels_csv.write(u'{},{}\n'.format(file_path, character))
 
             for i in range(DISTORTION_COUNT):
                 total_count += 1
@@ -88,7 +86,7 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
                 )
                 distorted_image = Image.fromarray(distorted_array)
                 distorted_image.save(file_path, 'JPEG')
-                csv_writer.writerow([file_path, character])
+                labels_csv.write(u'{},{}\n'.format(file_path, character))
 
     print('Finished generating {} images.'.format(total_count))
     labels_csv.close()

@@ -168,7 +168,7 @@ if __name__ == '__main__':
                         default=DEFAULT_LABEL_CSV,
                         help='File containing image paths and corresponding '
                              'labels.')
-    parser.add_argument('--labels-file', type=str, dest='label_file',
+    parser.add_argument('--label-file', type=str, dest='label_file',
                         default=DEFAULT_LABEL_FILE,
                         help='File containing newline delimited labels.')
     parser.add_argument('--output-dir', type=str, dest='output_dir',
