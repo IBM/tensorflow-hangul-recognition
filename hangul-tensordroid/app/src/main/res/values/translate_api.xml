@@ -1,0 +1,5 @@
+<resources>
+    <!-- The username and password provided by the Watson Language Translator service. -->
+    <string name="username"></string>
+    <string name="password"></string>
+</resources>

@@ -140,7 +140,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         postData.put("text", text);
         postData.put("source", "ko");
         postData.put("target", "en");
-        HangulTranslator translator = new HangulTranslator(postData, translationText);
+        String username = getResources().getString(R.string.username);
+        String password = getResources().getString(R.string.password);
+        HangulTranslator translator = new HangulTranslator(postData, translationText, username,
+                                                           password);
         translator.execute();
     }
 
