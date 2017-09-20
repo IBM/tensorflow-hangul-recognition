@@ -27,7 +27,7 @@ The following steps will be covered:
 
 ## Prerequisites
 
-Make sure you have the python requirements for this journey installed on you
+Make sure you have the python requirements for this journey installed on your
 system. From the root of the repository, run:
 
 ```
