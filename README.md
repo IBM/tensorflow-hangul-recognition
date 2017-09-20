@@ -66,6 +66,12 @@ system. From the root of the repository, run:
 pip install -r requirements.txt
 ```
 
+**Note:** For Windows users, the _scipy_ package is not installable via **pip**.
+The recommended way to use _scipy_ is to install a
+[scientific Python distribution](https://www.scipy.org/install.html#scientific-python-distributions).
+One of the more popular ones is [Anaconda](https://www.anaconda.com/download/).
+However, you can also manually install the _scipy_ package on Windows using one
+of the installers located [here](http://www.lfd.uci.edu/%7Egohlke/pythonlibs/#scipy).
 
 ## 2. Generate Image Data
 
