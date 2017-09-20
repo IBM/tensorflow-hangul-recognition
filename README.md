@@ -225,7 +225,7 @@ After running the script, you should see the top five predictions and their
 corresponding scores. Hopefully the top prediction matches what your character
 actually is.
 
-***Note***: If running this script on Windows, in order for the Korean characters
+**Note**: If running this script on Windows, in order for the Korean characters
 to be displayed on the console, you must first change the active code page to
 support UTF-8. Just run:
 
@@ -240,4 +240,63 @@ Then you must change the console font to be one that supports Korean text
 ## Creating the Android Application
 
 With the saved model, a simple Android application can be created that will be
-able to classify handwritten Hangul that a user has drawn.
+able to classify handwritten Hangul that a user has drawn. A completed application
+has already been included in [./hangul-tensordroid](./hangul-tensordroid).
+
+### Setup project
+The easiest way to try the app out yourself is to use
+[Android Studio](https://developer.android.com/studio/index.html). This
+will take care of a lot of the Android dependencies right inside the IDE.
+
+After downloading and installing Android Studio, perform the following steps:
+
+1) Launch Android Studio
+2) A **Welcome to Android Studio** window should appear, so here, click on
+  **Open an existing Android Studio project**. If this window does not appear,
+  then just go to **File > Open...** in the top menu.
+3) In the file browser, navigate to and click on the _./hangul-tensordroid_ directory
+   of this project, and then press **OK**.
+
+The project should now be buildable and useable from within Android Studio.
+
+In it's current state, the provided Android application uses the _2350-common-hangul.txt_
+label files and already has a pre-trained model trained on about 200,000 images
+from 22 fonts. These are located in _./hangul-tensordroid/app/src/main/assets/_.
+If you want to switch out the model or labels file, simply place them in this directory.
+You must then specify the names of these files in
+_./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/MainActivity.java_ by
+simply changing the values of the constants `LABEL_FILE` and `MODEL_FILE` located
+at the top of the class.
+
+If you want to enable translation support, you must do the following:
+
+1) Create a Bluemix account [here](https://console.bluemix.net/registration/).
+2) Create the [Watson Language Translator](https://console.bluemix.net/catalog/services/language-translator)
+   service.
+3) Get Translator service credentials. Credentials should have been automatically
+   created. You can retrieve them by clicking on the **Language Translator** service
+   under the **Services** section of your Bluemix dashboard.
+4) Update _./hangul-tensordroid/app/src/main/res/values/translate_api.xml_ with
+   the **username** and **password** retrieved in step 3.
+
+### Run the application
+
+When you are ready to build and run the application, click on the green arrow
+button at the top of Android Studio.
+
+![Android Studio Run Button](doc/source/images/android-studio-play-button.png "Run Button")
+
+This should prompt a window to **Select Deployment Target**. If you have an actual
+Android device, feel free to plug it into your computer using USB. More info can be
+found [here](https://developer.android.com/studio/run/device.html). If you do not
+have an Android device, you can alternatively use an emulator. In the
+**Select Deployment Target** window, click on **Create New Virtual Device**. Then
+just follow the wizard, selecting a device definition and image (preferably an
+image with API level 21 or above). After the virtual device has been created,
+you can now select it when running the application.
+
+After selecting a device, the application will automatically build, install, and
+then launch on the device.
+
+Try drawing in the application to see how well the model recognizes your Hangul
+writing.
