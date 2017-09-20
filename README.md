@@ -24,8 +24,40 @@ The following steps will be covered:
 4. Using the saved model in a simple Android application.
 5. Connecting the Watson Language Translator service to translate the characters.
 
+![Application Architecture](doc/source/images/app-architecture.png "Application architecture")
 
-## Prerequisites
+
+## Included Components
+
+* [Watson Language Translator](https://www.ibm.com/watson/services/language-translator/):
+  A Bluemix service that converts text input in one language into a destination
+  language for the end user using background from domain-specific models.
+
+
+## Featured Technologies
+
+* [TensorFlow](https://www.tensorflow.org/): An open-source software library for
+  Machine Intelligence.
+* [Android](https://developer.android.com/develop/index.html): An open-source mobile
+  operation system based on the Linux kernel.
+* [Java](https://java.com/): A secure, object-oriented programming language for
+  creating applications.
+
+
+# Steps
+
+Follow these steps to setup and run this developer journey. The steps are
+described in detail below.
+
+1. [Install Prerequisites](#1-install-prerequisites)
+2. [Generate Image Data](#2-generate-image-data)
+3. [Convert Images to TFRecords](#3-convert-images-to-tfrecords)
+4. [Train the Model](#4-train-the-model)
+5. [Try Out the Model](#5-try-out-the-model)
+6. [Create the Android Application](#6-create-the-android-application)
+
+
+## 1. Install Prerequisites
 
 Make sure you have the python requirements for this journey installed on your
 system. From the root of the repository, run:
@@ -35,7 +67,7 @@ pip install -r requirements.txt
 ```
 
 
-## Generating Image Data
+## 2. Generate Image Data
 
 In order to train a decent model, having copious amounts of data is necessary.
 However, getting a large enough dataset of actual handwritten Korean characters
@@ -95,7 +127,7 @@ _labels-map.csv_ file which will map all the image paths to their corresponding
 labels.
 
 
-## Converting Images to TFRecords
+## 3. Convert Images to TFRecords
 
 The TensorFlow standard input format is TFRecords, so in order to better feed in
 data to a TensorFlow model, let's first create several TFRecords files from our
@@ -135,7 +167,7 @@ $ ls ./tfrecords-output
 test1.tfrecords    train1.tfrecords    train2.tfrecords    train3.tfrecords
 ```
 
-## Training the Model
+## 4. Train the Model
 
 Now that we have a lot of data, it is time to actually use it. In the root of
 the project is [hangul-model.py](./hangul-model.py). This script will handle
@@ -193,7 +225,7 @@ a [Protocol Buffer](https://en.wikipedia.org/wiki/Protocol_Buffers) file
 which represents a serialized version of our model with all the learned weights
 and biases. This specific one is optimized for inference-only usage.
 
-## Trying Out the Model
+## 5. Try Out the Model
 
 Before we jump into making an Android application with our newly saved model,
 let's first try it out. Provided is a script that will load your model and use it
@@ -237,7 +269,7 @@ Then you must change the console font to be one that supports Korean text
 (like Batang, Dotum, or Gulim).
 
 
-## Creating the Android Application
+## 6. Create the Android Application
 
 With the saved model, a simple Android application can be created that will be
 able to classify handwritten Hangul that a user has drawn. A completed application
