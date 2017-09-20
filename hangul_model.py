@@ -216,7 +216,7 @@ def main(label_file, tfrecords_dir, model_output_dir):
     y = tf.matmul(h_fc1_drop, W_fc2) + b_fc2
 
     # This isn't used for training, but for when using the saved model.
-    output = tf.nn.softmax(y, name=output_node_name)
+    tf.nn.softmax(y, name=output_node_name)
 
     # Define our loss.
     cross_entropy = tf.reduce_mean(
