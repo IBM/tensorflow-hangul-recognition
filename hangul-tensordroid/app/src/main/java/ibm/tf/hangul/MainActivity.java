@@ -24,6 +24,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView translationText;
     private String[] currentTopLabels;
 
+    /**
+     * This is called when the application is first initialized/started. Basic setup logic is
+     * performed here.
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadModel();
     }
 
+    /**
+     * This method is called when the user clicks a button in the view.
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -100,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Delete the last character in the text input field.
+     */
     private void backspace() {
         int len = resultText.getText().length();
         if (len > 0) {
@@ -107,10 +119,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Add a space to the text input.
+     */
     private void space() {
         resultText.append(" ");
     }
 
+    /**
+     * Clear the text and drawing to return to the beginning state.
+     */
     private void clear() {
         paintView.reset();
         paintView.invalidate();
@@ -119,9 +137,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         altLayout.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Perform the classification, updating UI elements with the results.
+     */
     private void classify() {
         float pixels[] = paintView.getPixelData();
-        currentTopLabels = classifier.recognize(pixels);
+        currentTopLabels = classifier.classify(pixels);
         resultText.append(currentTopLabels[0]);
         altLayout.setVisibility(View.VISIBLE);
         alt1.setText(currentTopLabels[1]);
@@ -130,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alt4.setText(currentTopLabels[4]);
     }
 
+    /**
+     * Perform the translation using the current Korean text in the text input field.
+     */
     private void translate() {
         String text = resultText.getText().toString();
         if (text.isEmpty()) {
@@ -148,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * This function will switch out the last classfied character with the alternative given the
+     * This function will switch out the last classified character with the alternative given the
      * index in the top labels array.
      */
     private void useAltLabel(int index) {

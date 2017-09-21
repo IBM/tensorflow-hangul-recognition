@@ -338,3 +338,8 @@ then launch on the device.
 
 Try drawing in the application to see how well the model recognizes your Hangul
 writing.
+
+
+# License
+
+[Apache 2.0](LICENSE)

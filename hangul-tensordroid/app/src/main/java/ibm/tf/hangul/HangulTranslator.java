@@ -49,6 +49,11 @@ public class HangulTranslator extends AsyncTask<String, Void, String> {
         super.onPreExecute();
     }
 
+    /**
+     * This is the asynchronously called function that will send an HTTP POST request to the
+     * translator endpoint with the Korean text in the request.
+     * @return String response from the translator service.
+     */
     @Override
     protected String doInBackground(String... params) {
 
@@ -104,6 +109,11 @@ public class HangulTranslator extends AsyncTask<String, Void, String> {
         return result;
     }
 
+    /**
+     * This is called after the response string is returned. This parses out the English
+     * translation and sets the necessary TextView for displaying the translation.
+     * @param result String
+     */
     @Override
     protected void onPostExecute(String result) {
         if (result.isEmpty()) {

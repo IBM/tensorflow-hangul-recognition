@@ -52,6 +52,9 @@ public class PaintView extends View {
         paint.setStrokeWidth(6);
     }
 
+    /**
+     * Remove all strokes and clear the canvas.
+     */
     public void reset() {
         path.reset();
         if (bitmap != null) {
@@ -64,6 +67,11 @@ public class PaintView extends View {
         drawHere = true;
     }
 
+    /**
+     * This function will create the transform matrix for scaling up and centering the bitmap
+     * that will represent our character image inside the view. The inverse matrix is also created
+     * for mapping touch coordinates to coordinates within the bitmap.
+     */
     private void setupScaleMatrices() {
 
         // View size.
@@ -77,7 +85,7 @@ public class PaintView extends View {
             scale = scaleH;
         }
 
-        // Translation to center bitmap on screen after it is scaled up.
+        // Translation to center bitmap in view after it is scaled up.
         float centerX = BITMAP_DIMENSION * scale / 2;
         float centerY = BITMAP_DIMENSION * scale / 2;
         float dx = width / 2 - centerX;
@@ -130,6 +138,8 @@ public class PaintView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        // If this is the first time the user has touched the drawable canvas, hide the text that
+        // tells the user where to draw.
         if (drawHere) {
             drawTextView.setVisibility(View.INVISIBLE);
             drawHere = false;
@@ -172,7 +182,7 @@ public class PaintView extends View {
     }
 
     /**
-     * This function will convert the bitmap pixels to useable input to our TensorFlow model.
+     * This function will convert the bitmap pixels to usable input to our TensorFlow model.
      */
     public float[] getPixelData() {
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, FEED_DIMENSION,
