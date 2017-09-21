@@ -135,15 +135,19 @@ labels.
 
 ## 3. Convert Images to TFRecords
 
-The TensorFlow standard input format is TFRecords, so in order to better feed in
-data to a TensorFlow model, let's first create several TFRecords files from our
-images. A [script](./tools/convert-to-tfrecords.py) is provided that will do this
-for us.
+The TensorFlow standard input format is
+[TFRecords](https://www.tensorflow.org/api_guides/python/python_io#tfrecords_format_details),
+which is a binary format that we can use to store raw image data and their labels
+in one place. In order to better feed in data to a TensorFlow model, let's first create
+several TFRecords files from our images. A [script](./tools/convert-to-tfrecords.py)
+is provided that will do this for us.
 
-This script will first partition the data so that we have a training set and
-also a testing set (15% testing, 85% training). Then it will read in
-all the image and label data based on the _labels-map.csv_ file that was
-generated above.
+This script will first read in all the image and label data based on the
+_labels-map.csv_ file that was generated above. Then it will partition the data
+so that we have a training set and also a testing set (15% testing, 85% training).
+By default, the training set will be saved into multiple files/shards
+(three) so as not to end up with one gigantic file, but this can be configured
+with a CLI argument, _--num-shards-train_, depending on your data set size.
 
 To run the script, you can simply do:
 
@@ -179,7 +183,9 @@ Now that we have a lot of data, it is time to actually use it. In the root of
 the project is [hangul-model.py](./hangul-model.py). This script will handle
 creating an input pipeline for reading in TFRecords files and producing random
 batches of images and labels. Next, a convolutional neural network (CNN) is
-defined, and training is performed. After training, the model is exported
+defined, and training is performed. The training process will continuously feed
+in batches of images and labels to the CNN to find the optimal weight and biases
+for correctly classifying each character. After training, the model is exported
 so that it can be used in our Android application.
 
 The model here is similar to the MNIST model described on the TensorFlow
