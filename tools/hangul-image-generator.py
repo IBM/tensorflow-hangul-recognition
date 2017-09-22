@@ -37,7 +37,8 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
     The generated images will be stored in the given output directory. Image
     paths will have their corresponding labels listed in a CSV file.
     """
-    labels = io.open(label_file, 'r', encoding='utf-8').read().splitlines()
+    with io.open(label_file, 'r', encoding='utf-8') as f:
+        labels = f.read().splitlines()
 
     image_dir = os.path.join(output_dir, 'hangul-images')
     if not os.path.exists(image_dir):
