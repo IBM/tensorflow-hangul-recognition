@@ -101,9 +101,10 @@ help reduce the amount of model training time later on.
 The [fonts](./fonts) folder is currently empty, so before you can generate the
 Hangul dataset, you must first download
 several font files as described in the fonts directory [README](./fonts/README.md).
-For my dataset, I used around 22 different font files, but more can always be
-used to improve your dataset. Once your fonts directory is populated,
-then you can proceed with the actual image generation:
+For my dataset, I used around 40 different font files, but more can always be
+used to improve your dataset, especially if you get several uniquely stylized ones.
+Once your fonts directory is populated, then you can proceed with the actual
+image generation:
 
 ```
 python ./tools/hangul-image-generator.py
@@ -118,9 +119,9 @@ Optional flags for this are:
   Default is _./image-data_.
 
 Depending on how many labels and fonts there are, this script may take a while
-to complete. In order to bolster the dataset, random elastic distortions are also
-performed on each generated character image. An example is shown below, with the
-original character displayed first, followed by three elastic distortions.
+to complete. In order to bolster the dataset, three random elastic distortions are
+also performed on each generated character image. An example is shown below, with
+the original character displayed first, followed by the elastic distortions.
 
 ![Normal Image](doc/source/images/hangul_normal.jpeg "Normal font character image")
 ![Distorted Image 1](doc/source/images/hangul_distorted1.jpeg "Distorted font character image")
@@ -152,7 +153,7 @@ with a CLI argument, _--num-shards-train_, depending on your data set size.
 To run the script, you can simply do:
 
 ```
-python ./tools/convert_to_tfrecords.py
+python ./tools/convert-to-tfrecords.py
 ```
 
 Optional flags for this are:
@@ -212,9 +213,9 @@ Optional flags for this script are:
 Note: In this script there is a NUM_TRAIN_STEPS variable defined at the top.
 This should be increased with more data (or vice versa). The number of steps
 should cover several iterations over all of the training data (epochs).
-For example, if I had 200,000 images in my training set, one epoch would be
-_200000/100 = 2000_ steps where _100_ is the batch size. So, if I wanted to
-train for 30 epochs, I would simply do _2000*30 = 60000_ training steps.
+For example, if I had 320,000 images in my training set, one epoch would be
+_320000/100 = 3200_ steps where _100_ is the batch size. So, if I wanted to
+train for 30 epochs, I would simply do _3200*30 = 96000_ training steps.
 
 Depending on how many images you have, this will likely take a long time to
 train (several hours to maybe even a day), especially if only training on a laptop.
@@ -224,7 +225,8 @@ should certainly install the TensorFlow version with GPU support (supported on
 [Windows](https://www.tensorflow.org/install/install_windows) only).
 
 On my Windows desktop computer with an Nvidia GTX 1080 graphics card, training
-about 200,000 images with the script defaults took about an hour and a half.
+about 320,000 images with the script defaults took just a bit over two hours.
+Training on my MacBook Pro would probably take over 20 times that long.
 
 Another alternative is to use a reduced label set (i.e. 256 vs 2350 Hangul
 characters) which can reduce the computational complexity quite a bit.
@@ -301,11 +303,14 @@ After downloading and installing Android Studio, perform the following steps:
 3) In the file browser, navigate to and click on the _./hangul-tensordroid_ directory
    of this project, and then press **OK**.
 
-The project should now be buildable and useable from within Android Studio.
+The project should now be buildable and useable from within Android Studio. When
+Gradle builds the project for the first time, you might find that there are some
+dependency issues, but these are easily resolvable in Android Studio by clicking
+on the error prompt links to install the dependencies.
 
 In it's current state, the provided Android application uses the _2350-common-hangul.txt_
-label files and already has a pre-trained model trained on about 200,000 images
-from 22 fonts. These are located in _./hangul-tensordroid/app/src/main/assets/_.
+label files and already has a pre-trained model trained on about 320,000 images
+from 40 fonts. These are located in _./hangul-tensordroid/app/src/main/assets/_.
 If you want to switch out the model or labels file, simply place them in this directory.
 You must then specify the names of these files in
 _./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/MainActivity.java_ by

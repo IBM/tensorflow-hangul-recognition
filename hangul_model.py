@@ -23,7 +23,7 @@ IMAGE_HEIGHT = 64
 
 # NUM_TRAIN_STEPS should be increased with more data. The number of steps
 # should cover several iterations over all of the training data (epochs).
-# Example: If you have 10000 images in the training set, one epoch would be
+# Example: If you have 15000 images in the training set, one epoch would be
 # 15000/100 = 150 steps where 100 is the batch size.
 NUM_TRAIN_STEPS = 60000
 BATCH_SIZE = 100
