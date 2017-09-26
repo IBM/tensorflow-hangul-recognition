@@ -8,4 +8,4 @@ install:
 before_script:
   - flake8 . --count --show-source --statistics
 script:
-  - true
+  - py.test ./tests
