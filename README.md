@@ -7,9 +7,9 @@ syllables/characters. However, only a small subset of these are typically used.
 This journey will cover the creation process of an Android application that
 will utilize a TensorFlow model trained to recognize Korean syllables.
 In this application, users will be able to draw a Korean syllable on their
-phone, and the application will attempt to infer what the character is by using
-the trained model. Furthermore, users will be able to form words or sentences in
-the application which they can then translate using the
+mobile device, and the application will attempt to infer what the character is by
+using the trained model. Furthermore, users will be able to form words or sentences
+in the application which they can then translate using the
 [Watson Language Translator](https://www.ibm.com/watson/services/language-translator/)
 service.
 
@@ -30,18 +30,25 @@ The following steps will be covered:
 ## Included Components
 
 * [Watson Language Translator](https://www.ibm.com/watson/services/language-translator/):
-  A Bluemix service that converts text input in one language into a destination
-  language for the end user using background from domain-specific models.
+A Bluemix service that converts text input in one language into a destination language
+for the end user using background from domain-specific models.
+* [TensorFlow](https://www.tensorflow.org/): An open-source software library for
+Machine Intelligence.
+* [Android](https://developer.android.com/develop/index.html): An open-source mobile
+operating system based on the Linux kernel.
 
 
 ## Featured Technologies
 
-* [TensorFlow](https://www.tensorflow.org/): An open-source software library for
-  Machine Intelligence.
-* [Android](https://developer.android.com/develop/index.html): An open-source mobile
-  operation system based on the Linux kernel.
-* [Java](https://java.com/): A secure, object-oriented programming language for
-  creating applications.
+* [Artificial Intelligence](https://developer.ibm.com/code/technologies/artificial-intelligence):
+Cognitive technologies that can understand, reason, learn, and interact like humans.
+* [Mobile](https://developer.ibm.com/code/technologies/mobile): An environment to
+develop apps and enable engagements that are designed specifically for mobile users.
+
+
+# Watch the Video
+
+[![](http://img.youtube.com/vi/Ynusw4RcyRY/0.jpg)](https://www.youtube.com/watch?v=Ynusw4RcyRY)
 
 
 # Steps
@@ -228,7 +235,7 @@ On my Windows desktop computer with an Nvidia GTX 1080 graphics card, training
 about 320,000 images with the script defaults took just a bit over two hours.
 Training on my MacBook Pro would probably take over 20 times that long.
 
-Another alternative is to use a reduced label set (i.e. 256 vs 2350 Hangul
+One alternative is to use a reduced label set (i.e. 256 vs 2350 Hangul
 characters) which can reduce the computational complexity quite a bit.
 
 As the script runs, you should hopefully see the printed training accuracies
@@ -242,10 +249,10 @@ and biases. This specific one is optimized for inference-only usage.
 ## 5. Try Out the Model
 
 Before we jump into making an Android application with our newly saved model,
-let's first try it out. Provided is a script that will load your model and use it
-for inference on a given image. Try it out on images of your own, or download some
-of the sample images below. Just make sure each image is 64x64 pixels with a
-black background and white character color.
+let's first try it out. Provided is a [script](./tools/classify-hangul.py) that
+will load your model and use it for inference on a given image. Try it out on
+images of your own, or download some of the sample images below. Just make sure
+each image is 64x64 pixels with a black background and white character color.
 
 ```
 python ./tools/classify-hangul.py <Image Path>
@@ -289,7 +296,8 @@ With the saved model, a simple Android application can be created that will be
 able to classify handwritten Hangul that a user has drawn. A completed application
 has already been included in [./hangul-tensordroid](./hangul-tensordroid).
 
-### Setup project
+### Set up the project
+
 The easiest way to try the app out yourself is to use
 [Android Studio](https://developer.android.com/studio/index.html). This
 will take care of a lot of the Android dependencies right inside the IDE.
@@ -303,17 +311,38 @@ After downloading and installing Android Studio, perform the following steps:
 3) In the file browser, navigate to and click on the _./hangul-tensordroid_ directory
    of this project, and then press **OK**.
 
-The project should now be buildable and useable from within Android Studio. When
-Gradle builds the project for the first time, you might find that there are some
-dependency issues, but these are easily resolvable in Android Studio by clicking
-on the error prompt links to install the dependencies.
+After building and initializing, the project should now be usable from within
+Android Studio. When Gradle builds the project for the first time, you might
+find that there are some dependency issues, but these are easily resolvable in
+Android Studio by clicking on the error prompt links to install the dependencies.
+
+In Android Studio, you can easily see the project structure from the side menu.
+
+![Android Project Structure](doc/source/images/android-project-structure.png "Project Structure")
+
+The java folder contains all the java source code for the app. Expanding this
+shows that we have just four java files:
+
+1) **[MainActivity.java](./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/MainActivity.java)**
+   is the main launch point of the application and will
+   handle the setup and button pressing logic.
+2) **[PaintView.java](./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/PaintView.java)**
+   is the class that enables the user to draw Korean characters in a BitMap on
+   the screen.
+3) **[HangulClassifier.java](./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/HangulClassifier.java)**
+   handles loading our pre-trained model and connecting it with the TensorFlow
+   Inference Interface which we can use to pass in images for classification.
+4) **[HangulTranslator.java](./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/HangulTranslator.java)**
+   interfaces with the Watson Language Translator API to get English translations for our text.
 
 In it's current state, the provided Android application uses the _2350-common-hangul.txt_
 label files and already has a pre-trained model trained on about 320,000 images
-from 40 fonts. These are located in _./hangul-tensordroid/app/src/main/assets/_.
+from 40 fonts. These are located in the _assets_ folder of the project,
+_./hangul-tensordroid/app/src/main/assets/_.
 If you want to switch out the model or labels file, simply place them in this directory.
 You must then specify the names of these files in
-_./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/MainActivity.java_ by
+[MainActivity.java](./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/MainActivity.java),
+_./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/MainActivity.java_, by
 simply changing the values of the constants `LABEL_FILE` and `MODEL_FILE` located
 at the top of the class.
 
@@ -325,8 +354,9 @@ If you want to enable translation support, you must do the following:
 3) Get Translator service credentials. Credentials should have been automatically
    created. You can retrieve them by clicking on the **Language Translator** service
    under the **Services** section of your Bluemix dashboard.
-4) Update _./hangul-tensordroid/app/src/main/res/values/translate_api.xml_ with
-   the **username** and **password** retrieved in step 3.
+4) Update
+   _[./hangul-tensordroid/app/src/main/res/values/translate_api.xml](./hangul-tensordroid/app/src/main/res/values/translate_api.xml)_
+   with the **username** and **password** retrieved in step 3.
 
 ### Run the application
 

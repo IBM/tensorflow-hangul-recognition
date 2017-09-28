@@ -31,7 +31,7 @@ def _bytes_feature(value):
 
 
 class TFRecordsConverter(object):
-    """Class that handless converting images to TFRecords."""
+    """Class that handles converting images to TFRecords."""
 
     def __init__(self, labels_csv, label_file, output_dir,
                  num_shards_train, num_shards_test):
@@ -92,6 +92,12 @@ class TFRecordsConverter(object):
             label = self.labels[i]
             with tf.gfile.FastGFile(filename, 'rb') as f:
                 im_data = f.read()
+
+            # Example is a data format that contains a key-value store, where
+            # each key maps to a Feature message. In this case, each Example
+            # contains two features. One will be a ByteList for the raw image
+            # data and the other will be an Int64List containing the index of
+            # the corresponding label in the labels list from the file.
             example = tf.train.Example(features=tf.train.Features(feature={
                 'image/class/label': _int64_feature(label),
                 'image/encoded': _bytes_feature(tf.compat.as_bytes(im_data))}))
