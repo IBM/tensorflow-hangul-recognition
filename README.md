@@ -188,7 +188,7 @@ test1.tfrecords    train1.tfrecords    train2.tfrecords    train3.tfrecords
 ## 4. Train the Model
 
 Now that we have a lot of data, it is time to actually use it. In the root of
-the project is [hangul-model.py](./hangul-model.py). This script will handle
+the project is [hangul_model.py](./hangul_model.py). This script will handle
 creating an input pipeline for reading in TFRecords files and producing random
 batches of images and labels. Next, a convolutional neural network (CNN) is
 defined, and training is performed. The training process will continuously feed
