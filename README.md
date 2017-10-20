@@ -24,7 +24,25 @@ The following steps will be covered:
 4. Using the saved model in a simple Android application.
 5. Connecting the Watson Language Translator service to translate the characters.
 
-![Application Architecture](doc/source/images/app-architecture.png "Application architecture")
+
+## Flow
+
+![Application Architecture](doc/source/images/app-architecture-2.png "Application architecture")
+
+1. The user downloads several Korean fonts to use for data generation.
+2. The images generated from the fonts are fed into a TensorFlow model for training.
+3. The user draws a Korean character on their Android device.
+4. The drawn character is recognized using the previously trained TensorFlow model and the
+   Android TensorFlow Inference Interface.
+5. A string of the classified Korean characters is sent to the Watson Language Translator
+   service to retrieve an English translation.
+
+
+## With Watson
+
+Want to take your Watson app to the next level? Looking to leverage Watson Brand assets? Join the
+[With Watson](https://www.ibm.com/watson/with-watson) program which provides exclusive brand,
+marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
 
 
 ## Included Components
@@ -46,12 +64,12 @@ Cognitive technologies that can understand, reason, learn, and interact like hum
 develop apps and enable engagements that are designed specifically for mobile users.
 
 
-# Watch the Video
+## Watch the Video
 
 [![](http://img.youtube.com/vi/Ynusw4RcyRY/0.jpg)](https://www.youtube.com/watch?v=Ynusw4RcyRY)
 
 
-# Steps
+## Steps
 
 Follow these steps to setup and run this developer journey. The steps are
 described in detail below.
@@ -64,7 +82,7 @@ described in detail below.
 6. [Create the Android Application](#6-create-the-android-application)
 
 
-## 1. Install Prerequisites
+### 1. Install Prerequisites
 
 Make sure you have the python requirements for this journey installed on your
 system. From the root of the repository, run:
@@ -80,7 +98,7 @@ One of the more popular ones is [Anaconda](https://www.anaconda.com/download/).
 However, you can also manually install the _scipy_ package on Windows using one
 of the installers located [here](http://www.lfd.uci.edu/%7Egohlke/pythonlibs/#scipy).
 
-## 2. Generate Image Data
+### 2. Generate Image Data
 
 In order to train a decent model, having copious amounts of data is necessary.
 However, getting a large enough dataset of actual handwritten Korean characters
@@ -111,11 +129,7 @@ several font files as described in the fonts directory [README](./fonts/README.m
 For my dataset, I used around 40 different font files, but more can always be
 used to improve your dataset, especially if you get several uniquely stylized ones.
 Once your fonts directory is populated, then you can proceed with the actual
-image generation:
-
-```
-python ./tools/hangul-image-generator.py
-```
+image generation with [hangul-image-generator.py](./tools/hangul-image-generator.py).
 
 Optional flags for this are:
 
@@ -124,6 +138,12 @@ Optional flags for this are:
 * `--font-dir` for specifying a different fonts directory. Default is _./fonts_.
 * `--output-dir` for specifying the output directory to store generated images.
   Default is _./image-data_.
+
+Now run it, specifying your chosen label file:
+
+```
+python ./tools/hangul-image-generator.py --label-file <your label file path>
+```
 
 Depending on how many labels and fonts there are, this script may take a while
 to complete. In order to bolster the dataset, three random elastic distortions are
@@ -141,7 +161,7 @@ _labels-map.csv_ file which will map all the image paths to their corresponding
 labels.
 
 
-## 3. Convert Images to TFRecords
+### 3. Convert Images to TFRecords
 
 The TensorFlow standard input format is
 [TFRecords](https://www.tensorflow.org/api_guides/python/python_io#tfrecords_format_details),
@@ -157,13 +177,7 @@ By default, the training set will be saved into multiple files/shards
 (three) so as not to end up with one gigantic file, but this can be configured
 with a CLI argument, _--num-shards-train_, depending on your data set size.
 
-To run the script, you can simply do:
-
-```
-python ./tools/convert-to-tfrecords.py
-```
-
-Optional flags for this are:
+Optional flags for this script are:
 
 * `--image-label-csv` for specifying the CSV file that maps image paths to labels.
   Default is _./image-data/labels-map.csv_
@@ -177,6 +191,12 @@ Optional flags for this are:
 * `--num-shards-test` for specifying the number of shards to divide testing set
   TFRecords into. Default is _1_.
 
+To run the script, you can simply do:
+
+```
+python ./tools/convert-to-tfrecords.py --label-file <your label file path>
+```
+
 Once this script has completed, you should have sharded TFRecords files in the
 output directory _./tfrecords-output_.
 
@@ -185,7 +205,7 @@ $ ls ./tfrecords-output
 test1.tfrecords    train1.tfrecords    train2.tfrecords    train3.tfrecords
 ```
 
-## 4. Train the Model
+### 4. Train the Model
 
 Now that we have a lot of data, it is time to actually use it. In the root of
 the project is [hangul_model.py](./hangul_model.py). This script will handle
@@ -201,12 +221,6 @@ The model here is similar to the MNIST model described on the TensorFlow
 convolutional layer is added to extract more features to help classify for the
 much greater number of classes.
 
-To run the script, simply do the following from the root of the project:
-
-```
-python ./hangul_model.py
-```
-
 Optional flags for this script are:
 
 * `--label-file` for specifying the labels that correspond to your training set.
@@ -216,13 +230,20 @@ Optional flags for this script are:
   Default is _./tfrecords-output_.
 * `--output-dir` for specifying the output directory to store model checkpoints,
    graphs, and Protocol Buffer files. Default is _./saved-model_.
+* `--num-train-steps` for specifying the number of training steps to perform.
+  This should be increased with more data (or vice versa). The number of steps
+  should cover several iterations over all of the training data (epochs).
+  For example, if I had 320,000 images in my training set, one epoch would be
+  _320000/100 = 3200_ steps where _100_ is the default batch size. So, if I wanted
+  to train for 30 epochs, I would simply do _3200*30 = 96000_ training steps.
+  Definitely tune this parameter on your own to try and hit at least 15 epochs.
+  Default is _30000_ steps.
 
-Note: In this script there is a NUM_TRAIN_STEPS variable defined at the top.
-This should be increased with more data (or vice versa). The number of steps
-should cover several iterations over all of the training data (epochs).
-For example, if I had 320,000 images in my training set, one epoch would be
-_320000/100 = 3200_ steps where _100_ is the batch size. So, if I wanted to
-train for 30 epochs, I would simply do _3200*30 = 96000_ training steps.
+To run the training, simply do the following from the root of the project:
+
+```
+python ./hangul_model.py --label-file <your label file path> --num-train-steps <num>
+```
 
 Depending on how many images you have, this will likely take a long time to
 train (several hours to maybe even a day), especially if only training on a laptop.
@@ -246,17 +267,13 @@ a [Protocol Buffer](https://en.wikipedia.org/wiki/Protocol_Buffers) file
 which represents a serialized version of our model with all the learned weights
 and biases. This specific one is optimized for inference-only usage.
 
-## 5. Try Out the Model
+### 5. Try Out the Model
 
 Before we jump into making an Android application with our newly saved model,
 let's first try it out. Provided is a [script](./tools/classify-hangul.py) that
 will load your model and use it for inference on a given image. Try it out on
 images of your own, or download some of the sample images below. Just make sure
 each image is 64x64 pixels with a black background and white character color.
-
-```
-python ./tools/classify-hangul.py <Image Path>
-```
 
 Optional flags for this are:
 
@@ -265,6 +282,12 @@ Optional flags for this are:
   Default is _./labels/2350-common-hangul.txt_.
 * `--graph-file` for specifying your saved model file.
   Default is _./saved-model/optimized_hangul_tensorflow.pb_.
+
+Run it like so:
+
+```
+python ./tools/classify-hangul.py <Image Path> --label-file <your label file path>
+```
 
 ***Sample Images:***
 
@@ -290,13 +313,13 @@ Then you must change the console font to be one that supports Korean text
 (like Batang, Dotum, or Gulim).
 
 
-## 6. Create the Android Application
+### 6. Create the Android Application
 
 With the saved model, a simple Android application can be created that will be
 able to classify handwritten Hangul that a user has drawn. A completed application
 has already been included in [./hangul-tensordroid](./hangul-tensordroid).
 
-### Set up the project
+#### Set up the project
 
 The easiest way to try the app out yourself is to use
 [Android Studio](https://developer.android.com/studio/index.html). This
@@ -358,7 +381,7 @@ If you want to enable translation support, you must do the following:
    _[./hangul-tensordroid/app/src/main/res/values/translate_api.xml](./hangul-tensordroid/app/src/main/res/values/translate_api.xml)_
    with the **username** and **password** retrieved in step 3.
 
-### Run the application
+#### Run the application
 
 When you are ready to build and run the application, click on the green arrow
 button at the top of Android Studio.
@@ -381,6 +404,13 @@ Try drawing in the application to see how well the model recognizes your Hangul
 writing.
 
 
-# License
+## Links
+
+* [Deep MNIST for Experts](https://www.tensorflow.org/get_started/mnist/pros): Tutorial for creating and training a convolutional neural network to recognize handwritten digits.
+* [TensorFlow Mobile](https://www.tensorflow.org/mobile/): Information on TensorFlow mobile support on different platforms.
+* [Hangul Syllables](https://en.wikipedia.org/wiki/Hangul_Syllables): List of all Hangul syllables.
+
+
+## License
 
 [Apache 2.0](LICENSE)

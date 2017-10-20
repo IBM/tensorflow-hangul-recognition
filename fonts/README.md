@@ -12,3 +12,5 @@ A good resource for getting Korean fonts can be found on the
 
 To download fonts on this website, just click on the font you would like, then
 keep clicking the big blue download buttons until a ttf file is actually downloaded.
+Make sure you stay in the Windows fonts section, as fonts in the Mac section will give
+you otf files and not ttf.

@@ -21,11 +21,7 @@ MODEL_NAME = 'hangul_tensorflow'
 IMAGE_WIDTH = 64
 IMAGE_HEIGHT = 64
 
-# NUM_TRAIN_STEPS should be increased with more data. The number of steps
-# should cover several iterations over all of the training data (epochs).
-# Example: If you have 15000 images in the training set, one epoch would be
-# 15000/100 = 150 steps where 100 is the batch size.
-NUM_TRAIN_STEPS = 60000
+DEFAULT_NUM_TRAIN_STEPS = 30000
 BATCH_SIZE = 100
 
 
@@ -116,7 +112,7 @@ def bias_variable(shape):
     return tf.Variable(initial, name='bias')
 
 
-def main(label_file, tfrecords_dir, model_output_dir):
+def main(label_file, tfrecords_dir, model_output_dir, num_train_steps):
     """Perform graph definition and model training.
 
     Here we will first create our input pipeline for reading in TFRecords
@@ -250,7 +246,7 @@ def main(label_file, tfrecords_dir, model_output_dir):
         tf.train.write_graph(sess.graph_def, model_output_dir,
                              MODEL_NAME + '.pbtxt', True)
 
-        for step in range(NUM_TRAIN_STEPS):
+        for step in range(num_train_steps):
             # Get a random batch of images and labels.
             train_images, train_labels = sess.run([image_batch, label_batch])
 
@@ -321,5 +317,16 @@ if __name__ == '__main__':
     parser.add_argument('--output-dir', type=str, dest='output_dir',
                         default=DEFAULT_OUTPUT_DIR,
                         help='Output directory to store saved model files.')
+    parser.add_argument('--num-train-steps', type=int, dest='num_train_steps',
+                        default=DEFAULT_NUM_TRAIN_STEPS,
+                        help='Number of training steps to perform. This value '
+                             'should be increased with more data. The number '
+                             'of steps should cover several iterations over '
+                             'all of the training data (epochs). Example: If '
+                             'you have 15000 images in the training set, one '
+                             'epoch would be 15000/100 = 150 steps where 100 '
+                             'is the batch size. So, for 10 epochs, you would '
+                             'put 150*10 = 1500 steps.')
     args = parser.parse_args()
-    main(args.label_file, args.tfrecords_dir, args.output_dir)
+    main(args.label_file, args.tfrecords_dir,
+         args.output_dir, args.num_train_steps)
