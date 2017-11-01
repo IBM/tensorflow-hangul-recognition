@@ -50,7 +50,7 @@ public class HangulTranslator extends AsyncTask<String, Void, String> {
     }
 
     /**
-     * This is the asynchronously called function that will send an HTTP POST request to the
+     * This is an asynchronously called function, that will send an HTTP POST request to the
      * translator endpoint with the Korean text in the request.
      * @return String response from the translator service.
      */
@@ -121,8 +121,8 @@ public class HangulTranslator extends AsyncTask<String, Void, String> {
         }
         try {
             JSONObject json = new JSONObject(result);
-            JSONArray array = (JSONArray) json.get("translations");
-            Object translation = ((JSONObject) array.get(0)).get("translation");
+            JSONArray array = json.optJSONArray("translations");
+            Object translation = array.optJSONObject(0).get("translation");
             view.setText(translation.toString());
         }
         catch (Exception e) {
