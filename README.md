@@ -27,7 +27,7 @@ The following steps will be covered:
 
 ## Flow
 
-![Application Architecture](doc/source/images/app-architecture-2.png "Application architecture")
+![architecture](doc/source/images/architecture.png)
 
 1. The user downloads several Korean fonts to use for data generation.
 2. The images generated from the fonts are fed into a TensorFlow model for training.
