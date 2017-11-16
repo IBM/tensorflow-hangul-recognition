@@ -5,12 +5,12 @@
 한국어를 표현하는 한글은 19개의 자음과 21개의 모음 문자를 가지고 있습니다. 이 문자들을 조합하면 최대 11,172개의 음절과 글자들을 표현할 수 있지만 그 중 일부만이 주로 사용됩니다.
 
 이 과정은 한국어 음절을 인식하는 TensorFlow 모델을 활용하는 Android 앱을 만드는 것을 다루게 됩니다.
-이 앱에서 사용자는 한국어 음절을 모바일 단말에 그릴 수 있게 되며, 앱은 훈련된 모델을 이용하여 어떤 글자인지를 추측하게 됩니다. 더 나아가, 앱에서 한글 단어 또는 문장을 작성한 다음 [Watson Language Translator](https://www.ibm.com/watson/services/language-translator/) 서비스를 사용하여 번역 할 수 있습니다.
+이 앱에서 사용자는 한국어 음절을 모바일 단말에 그릴 수 있게 되며, 앱은 훈련된 모델을 이용하여 어떤 글자인지를 추측하게 됩니다. 더 나아가, 앱에서 한글 단어 또는 문장을 작성한 다음 [Watson Language Translator](https://www.ibm.com/watson/services/language-translator/) 서비스를 사용하여 번역할 수 있습니다.
 
-![Demo App](doc/source/images/hangul_tensordroid_demo1.gif "Android application")
+![Demo App](doc/source/images/hangul_tensordroid_demo1.gif "Android app그러고 나서lication")
 
 다음과 같은 단계가 다루어집니다:
-1. 온라인에서 얻은 한글 지원 글꼴을 이용하여 이미지 데이터를 생성하고 탄성 변형을 진행 합니다.
+1. 온라인에서 얻은 한글 지원 글꼴을 이용하여 이미지 데이터를 생성하고 탄성 변형을 진행합니다.
 2. 입력과 모델 훈련에 사용되도록 이미지를 TFRecord 형식으로 변환합니다.
 3. 모델을 훈련하고 저장합니다.
 4. Android 앱에 저장된 모델을 사용합니다.
@@ -72,9 +72,9 @@ pip install -r requirements.txt
 ```
 
 **참고:** Windows 사용자인 경우, _scipy_ 패키지가 **pip** 를 통해 설치되지 않습니다. _scipy_ 사용을 위해 
-[scientific Python distribution](https://www.scipy.org/install.html#scientific-python-distributions)을 설치를 추천합니다.
+[scientific Python distribution](https://www.scipy.org/install.html#scientific-python-distributions) 설치를 추천합니다.
 좀 더 유명한 것 중 하나는 [Anaconda](https://www.anaconda.com/download/)입니다.
-그러나, Windows에서는 [여기](http://www.lfd.uci.edu/%7Egohlke/pythonlibs/#scipy)에 있는 인스톨러를 사용하면 수동으로 _scipy_ 패키지를 설치할 수 있습니다.
+그러나, Windows에서는 [여기](http://www.lfd.uci.edu/%7Egohlke/pythonlibs/#scipy)에 있는 인스톨러를 사용하여 수동으로 _scipy_ 패키지를 설치할 수 있습니다.
 
 ### 2. 이미지 자료 생성하기
 
@@ -87,11 +87,11 @@ pip install -r requirements.txt
 이 스크립트는 라벨 파일로 주어지는 각각의 문자에 대한 이미지를 생성하기 위해 fonts 디렉토리에 있는 글꼴들을 사용합니다. 기본 라벨 파일은 [2350-common-hangul.txt](./labels/2350-common-hangul.txt)로 [KS X 1001 encoding](https://en.wikipedia.org/wiki/KS_X_1001)에서 가지고 온 주요 사용 글자 2350자를 포함하고 있습니다. 다른 라벨 파일들은 [256-common-hangul.txt](./labels/256-common-hangul.txt) 와
 [512-common-hangul.txt](./labels/512-common-hangul.txt)이 있습니다.
 이 파일들은 국립국어원에 의해 편집된 기본 어휘 6000단어 목록([여기](https://www.topikguide.com/download/6000_korean_words.htm))에서 가져왔습니다.
-훈련용 컴퓨터 머신이 고성능이 아닌 경우, 좀 더 적은양의 라벨 세트를 사용하는 것이 나중에 전체 모델의 훈련 시간을 줄이는 데 도움이 될 수 있습니다.
+훈련용 컴퓨터 머신이 고성능이 아닌 경우, 좀 더 적은양의 라벨 세트를 사용하는 것이 나중에 전체 모델의 훈련 시할 수간을 줄이는 데 도움이 될 수 있습니다.
 
 [fonts](./fonts) 폴더는 현재는 비어있는데, 한글 데이터 세트를 생성하기 전에 fonts 디렉토리에 있는 [README](./fonts/README.md)에 설명해 놓은 글꼴 파일을 반드시 먼저 다운로드 해 놓아야 합니다.
-제가 사용한 데이터 셋은, 대략 40가지의 글꼴 파일을 사용하였으나 여러분의 데이터 세트를 더 좋게 만들고 싶다면 더 많은 파일을 사용 할 수 있습니다. 특히 몇몇 독특한 스타일을 갖고 있다면 더욱 그렇습니다.
-fonts 디렉토리가 채워지면, [hangul-image-generator.py](./tools/hangul-image-generator.py)로 실제 이미지 생성 단계를 진행 할 수 있습니다.
+제가 사용한 데이터 세트는 대략 40가지의 글꼴 파일을 사용하였지만 여러분의 데이터 세트를 더 좋게 만들고 싶다면 더 많은 파일을 사용할 수 있습니다. 특히 몇몇 독특한 스타일을 갖고 있다면 더욱 그렇습니다.
+fonts 디렉토리가 채워지면, [hangul-image-generator.py](./tools/hangul-image-generator.py)로 실제 이미지 생성 단계를 진행할 수 있습니다.
 
 이를 위한 선택 사항 플래그는 다음과 같습니다:
 
@@ -119,10 +119,10 @@ python ./tools/hangul-image-generator.py --label-file <your label file path>
 
 ### 3. 이미지를 TFRecords로 변환하기
 
-TensorFlow의 표준 입력 형식은 [TFRecords](https://www.tensorflow.org/api_guides/python/python_io#tfrecords_format_details)로서 원본 이미지 데이터와 라벨을 한 곳에 저장하기 위해 사용 할 수 있는 바이너리입니다. TensorFlow 모델에 양질의 데이터를 주기 위해 이미지들로 부터 TFRecords 파일을 먼저 생성합니다. 제공된 [스크립트](./tools/convert-to-tfrecords.py)는 이와 같은 동작을 수행합니다.
+TensorFlow의 표준 입력 형식은 [TFRecords](https://www.tensorflow.org/api_guides/python/python_io#tfrecords_format_details)로서 원본 이미지 데이터와 라벨을 한 곳에 저장하기 위해 사용할 수 있는 바이너리입니다. TensorFlow 모델에 양질의 데이터를 주기 위해 이미지들로 부터 TFRecords 파일을 먼저 생성합니다. 제공된 [스크립트](./tools/convert-to-tfrecords.py)는 이와 같은 동작을 수행합니다.
 
-이 스크립트는 먼저 앞서 생성했던 _labels-map.csv_ 파일을 기반으로 모든 이미지와 라벨 데이터를 읽어 들입니다. 그리고나서, 데이터를 나누어 테스트용 세트와 훈련용 세트(15% 테스트용, 85% 훈련용)를 얻게 됩니다.
-기본적으로, 테스트용 세트는 여러 개(세 개)의 파일/샤드(shard)에 저장되므로 파일이 거대화 되지는 않습니다. 그러나, CLI 옵션옵션 _--num-shards-train_ 를 이용하면 데이터 세트 크기에 따라 이를 조정 할 수 있습니다.
+이 스크립트는 먼저 앞서 생성했던 _labels-map.csv_ 파일을 기반으로 모든 이미지와 라벨 데이터를 읽어 들입니다. 그러고 나서, 데이터를 나누어 테스트용 세트와 훈련용 세트(15% 테스트용, 85% 훈련용)를 얻게 됩니다.
+기본적으로, 테스트용 세트는 여러 개(세 개)의 파일/샤드(shard)에 저장되므로 파일이 거대화 되지는 않습니다. 그러나, CLI 옵션 _--num-shards-train_ 을 이용하면 데이터 세트 크기에 따라 이를 조정할 수 있습니다.
 
 이 스크립트를 위한 옵션 플래그는 다음과 같습니다:
 
@@ -176,7 +176,7 @@ python ./hangul_model.py --label-file <your label file path> --num-train-steps <
 ```
 
 이미지를 얼마나 많이 가지고 있는지에 따라, 훈련에 걸리는 시간이 길어집니다 (몇 시간에서 하루가 걸리기도 합니다). 특히 랩톱 컴퓨터의 경우에 더 그렇습니다.
-GPU에 접근 할 수 있는 경우 속도 향상에 도움이 됩니다. 그 경우에는 GPU가 지원되는 TensorFlow 버젼을 설치해야 합니다. ([Ubuntu](https://www.tensorflow.org/install/install_linux)와 
+GPU에 접근할 수 있는 경우 속도 향상에 도움이 됩니다. 그 경우에는 GPU가 지원되는 TensorFlow 버젼을 설치해야 합니다. ([Ubuntu](https://www.tensorflow.org/install/install_linux)와 
 [Windows](https://www.tensorflow.org/install/install_windows)만 지원 가능합니다).
 
 Nvidia GTX 1080 그래픽카드를 가진 Windows 데크크톱 컴퓨터에서 320,000 개의 이미지를 스크립트 기본 값으로 훈련하는데 대략 2시간 정도가 소요되었습니다.
@@ -223,7 +223,7 @@ chcp 65001
 
 ### 6. Android 앱 작성하기
 
-저장된 모델을 가지고, 사용자가 그린 한글 손글씨를 구별 할 수 있는 간단한 Android 앱을 만들어 낼 수 있습니다. 완성된 앱이 [./hangul-tensordroid](./hangul-tensordroid)에 이미 들어 있습니다.
+저장된 모델을 가지고, 사용자가 그린 한글 손글씨를 구별할 수 있는 간단한 Android 앱을 만들어 낼 수 있습니다. 완성된 앱이 [./hangul-tensordroid](./hangul-tensordroid)에 이미 들어 있습니다.
 
 #### 프로젝트 구성하기
 
@@ -236,22 +236,22 @@ Android Studio를 다운로드하고 설치한 후 다음 단계를 수행하십
   **Open an existing Android Studio project**를 선택합니다. 이 윈도가 나타나지 않는다면, 상단 메뉴에서 **File > Open...** 을 선택합니다.
 3) 파일 탐색기에서 프로젝트의 _./hangul-tensordroid_ 디렉토리로 이동한 후 **OK** 를 클릭합니다.
 
-빌드와 초기화가 되면, 프로젝트는 Android Studio에서 사용 할 수 있는 상태가 됩니다. Gradle이 프로젝트를 첫 번째 빌드할 때, 몇몇의 의존성 이슈가 있는 것을 볼 수 있습니만 이는 Android Studio의 에러에 표시된 링크를 클릭하여 종속성을 설치하는 것으로 쉽게 해결 할 수 있습니다.
+빌드와 초기화가 되면, 프로젝트는 Android Studio에서 사용할 수 있는 상태가 됩니다. Gradle이 프로젝트를 첫 번째 빌드할 때, 몇몇의 의존성 이슈가 있는 것을 볼 수 있습니만 이는 Android Studio의 에러에 표시된 링크를 클릭하여 종속성을 설치하는 것으로 쉽게 해결할 수 있습니다.
 
-Android Studio의 사이드 메뉴에서 프로젝트의 구조를 쉽게 확인 할 수 있습니다.
+Android Studio의 사이드 메뉴에서 프로젝트의 구조를 쉽게 확인할 수 있습니다.
 
 ![Android Project Structure](doc/source/images/android-project-structure.png "Project Structure")
 
 java 폴더는 앱을 위한 모든 java 소스 코드를 담고 있습니다. 이를 펼쳐보면 네 개의 java 파일을 보여줍니다:
 
 1) **[MainActivity.java](./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/MainActivity.java)**
-   는 앱의 main이 시작하는 곳이며 설정 및 버튼 처리 로직을 담당합니다.
+   앱의 main이 시작하는 곳이며 설정 및 버튼 처리 로직을 담당합니다.
 2) **[PaintView.java](./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/PaintView.java)**
-   는 사용자가 화면의 BitMap에 한글을 그릴 수 있도록 하는 클래스입니다.
+   사용자가 화면의 BitMap에 한글을 그릴 수 있도록 하는 클래스입니다.
 3) **[HangulClassifier.java](./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/HangulClassifier.java)**
-   는 사전 훈련된 모델을 로딩하고 구별할 이미지를 전달하는데 사용되는TensorFlow Inference 인터페이스로 연결합니다.
+   사전 훈련된 모델을 로딩하고 구별할 이미지를 전달하는데 사용되는TensorFlow Inference 인터페이스로 연결합니다.
 4) **[HangulTranslator.java](./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/HangulTranslator.java)**
-   는 Watson Language Translator API에 대한 인터페이스로서 한글을 영문로 변환하는데 사용됩니다.
+   Watson Language Translator API에 대한 인터페이스로서 한글을 영문로 변환하는데 사용됩니다.
 
 현재 상태의 Android 앱은 _2350-common-hangul.txt_ 라벨 파일을 사용하며 40개의 글꼴에서 얻어진 320,000 개의 이미지를 사용하여 훈련된 모델을 포함하고 있습니다. 이는 프로젝트의 _assets_ 폴더(_./hangul-tensordroid/app/src/main/assets/_)에 저장되어 있습니다.
 만약 모델이나 라벨 파일을 바꾸는 경우라면 단순히 이 디렉토리에 가져다 놓으면 됩니다.
@@ -271,7 +271,7 @@ java 폴더는 앱을 위한 모든 java 소스 코드를 담고 있습니다. �
 
 ![Android Studio Run Button](doc/source/images/android-studio-play-button.png "Run Button")
 
-이 때 **Select Deployment Target** 이라는 윈도를 보게됩니다. 만약 실제 Android 단말을 가지고 있다면 부담없이 USB 케이블을 이용하여 컴퓨터에 연결할 수 있습니다. 자세한 정보는 [여기](https://developer.android.com/studio/run/device.html)를 참고 하시기 바랍니다. Android 단말이 없다면 대안으로 에뮬레이터를 이용할 수 있습니다. **Select Deployment Target** 윈도에서 **Create New Virtual Device** 를 클릭합니다. 그리고나서, 단말 정의와 이미지(API 레벨 21 이상의 이미지를 선호)를 선택합니다. 가상 단말이 생성되고 나면 앱을 실행할 대상으로 이를 선택할 수 있습니다.
+이 때 **Select Deployment Target** 이라는 윈도를 보게됩니다. 만약 실제 Android 단말을 가지고 있다면 부담없이 USB 케이블을 이용하여 컴퓨터에 연결할 수 있습니다. 자세한 정보는 [여기](https://developer.android.com/studio/run/device.html)를 참고 하시기 바랍니다. Android 단말이 없다면 대안으로 에뮬레이터를 이용할 수 있습니다. **Select Deployment Target** 윈도에서 **Create New Virtual Device** 를 클릭합니다. 그러고 나서, 단말 정의와 이미지(API 레벨 21 이상의 이미지를 선호)를 선택합니다. 가상 단말이 생성되고 나면 앱을 실행할 대상으로 이를 선택할 수 있습니다.
 
 단말을 골랐다면 앱은 자동으로 빌드되고 단말에 설치 및 실행됩니다.
 
