@@ -71,7 +71,7 @@
 pip install -r requirements.txt
 ```
 
-**참고:** Windows 사용자인 경우, _scipy_ 패키지가 **pip** 를 통해 설치되지 않습니다. _scipy_ 사용을 위해 
+**참고:** Windows 사용자인 경우, _scipy_ 패키지가 **pip** 를 통해 설치되지 않습니다. _scipy_ 사용을 위해
 [scientific Python distribution](https://www.scipy.org/install.html#scientific-python-distributions) 설치를 추천합니다.
 좀 더 유명한 것 중 하나는 [Anaconda](https://www.anaconda.com/download/)입니다.
 그러나, Windows에서는 [여기](http://www.lfd.uci.edu/%7Egohlke/pythonlibs/#scipy)에 있는 인스톨러를 사용하여 수동으로 _scipy_ 패키지를 설치할 수 있습니다.
@@ -176,7 +176,7 @@ python ./hangul_model.py --label-file <your label file path> --num-train-steps <
 ```
 
 이미지를 얼마나 많이 가지고 있는지에 따라, 훈련에 걸리는 시간이 길어집니다 (몇 시간에서 하루가 걸리기도 합니다). 특히 랩톱 컴퓨터의 경우에 더 그렇습니다.
-GPU에 접근할 수 있는 경우 속도 향상에 도움이 됩니다. 그 경우에는 GPU가 지원되는 TensorFlow 버젼을 설치해야 합니다. ([Ubuntu](https://www.tensorflow.org/install/install_linux)와 
+GPU에 접근할 수 있는 경우 속도 향상에 도움이 됩니다. 그 경우에는 GPU가 지원되는 TensorFlow 버젼을 설치해야 합니다. ([Ubuntu](https://www.tensorflow.org/install/install_linux)와
 [Windows](https://www.tensorflow.org/install/install_windows)만 지원 가능합니다).
 
 Nvidia GTX 1080 그래픽카드를 가진 Windows 데크크톱 컴퓨터에서 320,000 개의 이미지를 스크립트 기본 값으로 훈련하는데 대략 2시간 정도가 소요되었습니다.
