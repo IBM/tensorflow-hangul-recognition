@@ -50,7 +50,7 @@ marketing, and tech resources to amplify and accelerate your Watson embedded com
 ## Included Components
 
 * [Watson Language Translator](https://www.ibm.com/watson/services/language-translator/):
-A Bluemix service that converts text input in one language into a destination language
+A IBM Cloud service that converts text input in one language into a destination language
 for the end user using background from domain-specific models.
 * [TensorFlow](https://www.tensorflow.org/): An open-source software library for
 Machine Intelligence.
@@ -373,12 +373,12 @@ at the top of the class.
 
 If you want to enable translation support, you must do the following:
 
-1) Create a Bluemix account [here](https://console.bluemix.net/registration/).
+1) Create a IBM Cloud account [here](https://console.bluemix.net/registration/).
 2) Create the [Watson Language Translator](https://console.bluemix.net/catalog/services/language-translator)
    service.
 3) Get Translator service credentials. Credentials should have been automatically
    created. You can retrieve them by clicking on the **Language Translator** service
-   under the **Services** section of your Bluemix dashboard.
+   under the **Services** section of your IBM Cloud dashboard.
 4) Update
    _[./hangul-tensordroid/app/src/main/res/values/translate_api.xml](./hangul-tensordroid/app/src/main/res/values/translate_api.xml)_
    with the **username** and **password** retrieved in step 3.
