@@ -281,7 +281,7 @@ def main(label_file, tfrecords_dir, model_output_dir, num_train_steps):
 
         # We will run the test set through batches and sum the total number
         # of correct predictions.
-        num_batches = int(sample_count/BATCH_SIZE)
+        num_batches = int(sample_count/BATCH_SIZE) or 1
         total_correct_preds = 0
 
         # Define a different tensor operation for summing the correct
