@@ -48,7 +48,7 @@
 
 ## 동영상
 
-[![](http://img.youtube.com/vi/Ynusw4RcyRY/0.jpg)](https://www.youtube.com/watch?v=Ynusw4RcyRY)
+[![](https://img.youtube.com/vi/iefYaCOz00s/0.jpg)](https://www.youtube.com/watch?v=iefYaCOz00s)
 
 
 ## 단계

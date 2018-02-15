@@ -68,7 +68,7 @@ develop apps and enable engagements that are designed specifically for mobile us
 
 ## Watch the Video
 
-[![](http://img.youtube.com/vi/Ynusw4RcyRY/0.jpg)](https://www.youtube.com/watch?v=Ynusw4RcyRY)
+[![](https://img.youtube.com/vi/iefYaCOz00s/0.jpg)](https://www.youtube.com/watch?v=iefYaCOz00s)
 
 
 ## Steps
