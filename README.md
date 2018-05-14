@@ -84,12 +84,26 @@ $ git clone https://github.com/IBM/tensorflow-hangul-recognition
 
 ### 2. Install Prerequisites
 
-Make sure you have the python requirements for this code pattern installed on your
-system. From the root of the repository, run:
+Go to your cloned repo directory:
+```
+cd tensorflow-hangul-recognition
+```
 
+Optionally, to isolate your runtime environment, use a virtual environment as described
+[here](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/).
+Create a virtual environment:
+```
+python3 -m pip install --user virtualenv
+python3 -m virtualenv .venv
+source .venv/bin/activate
+```
+
+Install the python requirements for this code pattern. Run:
 ```
 pip install -r requirements.txt
 ```
+
+When you have completed the code pattern, use the `deactivate` command to leave the virtual environment.
 
 **Note:** For Windows users, the _scipy_ package is not installable via **pip**.
 The recommended way to use _scipy_ is to install a
@@ -357,7 +371,7 @@ shows that we have just four java files:
 4) **[HangulTranslator.java](./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/HangulTranslator.java)**
    interfaces with the Watson Language Translator API to get English translations for our text.
 
-In it's current state, the provided Android application uses the _2350-common-hangul.txt_
+In its current state, the provided Android application uses the _2350-common-hangul.txt_
 label files and already has a pre-trained model trained on about 320,000 images
 from 40 fonts. These are located in the _assets_ folder of the project,
 _./hangul-tensordroid/app/src/main/assets/_.
