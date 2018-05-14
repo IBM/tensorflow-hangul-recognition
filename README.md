@@ -6,7 +6,7 @@ Hangul, the Korean alphabet, has 19 consonant and 21 vowel letters.
 Combinations of these letters give a total of 11,172 possible Hangul
 syllables/characters. However, only a small subset of these are typically used.
 
-This journey will cover the creation process of an Android application that
+This code pattern will cover the creation process of an Android application that
 will utilize a TensorFlow model trained to recognize Korean syllables.
 In this application, users will be able to draw a Korean syllable on their
 mobile device, and the application will attempt to infer what the character is by
@@ -26,10 +26,9 @@ The following steps will be covered:
 4. Using the saved model in a simple Android application.
 5. Connecting the Watson Language Translator service to translate the characters.
 
+![architecture](doc/source/images/architecture.png)
 
 ## Flow
-
-![architecture](doc/source/images/architecture.png)
 
 1. The user downloads several Korean fonts to use for data generation.
 2. The images generated from the fonts are fed into a TensorFlow model for training.
@@ -38,14 +37,6 @@ The following steps will be covered:
    Android TensorFlow Inference Interface.
 5. A string of the classified Korean characters is sent to the Watson Language Translator
    service to retrieve an English translation.
-
-
-## With Watson
-
-Want to take your Watson app to the next level? Looking to leverage Watson Brand assets? Join the
-[With Watson](https://www.ibm.com/watson/with-watson) program which provides exclusive brand,
-marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
-
 
 ## Included Components
 
@@ -57,7 +48,6 @@ Machine Intelligence.
 * [Android](https://developer.android.com/develop/index.html): An open-source mobile
 operating system based on the Linux kernel.
 
-
 ## Featured Technologies
 
 * [Artificial Intelligence](https://developer.ibm.com/code/technologies/artificial-intelligence):
@@ -65,28 +55,36 @@ Cognitive technologies that can understand, reason, learn, and interact like hum
 * [Mobile](https://developer.ibm.com/code/technologies/mobile): An environment to
 develop apps and enable engagements that are designed specifically for mobile users.
 
-
-## Watch the Video
+# Watch the Video
 
 [![](https://img.youtube.com/vi/iefYaCOz00s/0.jpg)](https://www.youtube.com/watch?v=iefYaCOz00s)
 
+# Steps
 
-## Steps
+## Run locally
 
-Follow these steps to setup and run this developer journey. The steps are
+Follow these steps to setup and run this code pattern. The steps are
 described in detail below.
 
-1. [Install Prerequisites](#1-install-prerequisites)
-2. [Generate Image Data](#2-generate-image-data)
-3. [Convert Images to TFRecords](#3-convert-images-to-tfrecords)
-4. [Train the Model](#4-train-the-model)
-5. [Try Out the Model](#5-try-out-the-model)
-6. [Create the Android Application](#6-create-the-android-application)
+1. [Clone the repo](#1-clone-the-repo)
+2. [Install Prerequisites](#2-install-prerequisites)
+3. [Generate Image Data](#3-generate-image-data)
+4. [Convert Images to TFRecords](#4-convert-images-to-tfrecords)
+5. [Train the Model](#5-train-the-model)
+6. [Try Out the Model](#6-try-out-the-model)
+7. [Create the Android Application](#7-create-the-android-application)
 
+### 1. Clone the repo
 
-### 1. Install Prerequisites
+Clone the `tensorflow-hangul-recognition` locally. In a terminal, run:
 
-Make sure you have the python requirements for this journey installed on your
+```
+$ git clone https://github.com/IBM/tensorflow-hangul-recognition
+```
+
+### 2. Install Prerequisites
+
+Make sure you have the python requirements for this code pattern installed on your
 system. From the root of the repository, run:
 
 ```
@@ -100,7 +98,7 @@ One of the more popular ones is [Anaconda](https://www.anaconda.com/download/).
 However, you can also manually install the _scipy_ package on Windows using one
 of the installers located [here](http://www.lfd.uci.edu/%7Egohlke/pythonlibs/#scipy).
 
-### 2. Generate Image Data
+### 3. Generate Image Data
 
 In order to train a decent model, having copious amounts of data is necessary.
 However, getting a large enough dataset of actual handwritten Korean characters
@@ -162,8 +160,7 @@ which will hold all the 64x64 JPEG images. The output directory will also contai
 _labels-map.csv_ file which will map all the image paths to their corresponding
 labels.
 
-
-### 3. Convert Images to TFRecords
+### 4. Convert Images to TFRecords
 
 The TensorFlow standard input format is
 [TFRecords](https://www.tensorflow.org/api_guides/python/python_io#tfrecords_format_details),
@@ -207,7 +204,7 @@ $ ls ./tfrecords-output
 test1.tfrecords    train1.tfrecords    train2.tfrecords    train3.tfrecords
 ```
 
-### 4. Train the Model
+### 5. Train the Model
 
 Now that we have a lot of data, it is time to actually use it. In the root of
 the project is [hangul_model.py](./hangul_model.py). This script will handle
@@ -269,7 +266,7 @@ a [Protocol Buffer](https://en.wikipedia.org/wiki/Protocol_Buffers) file
 which represents a serialized version of our model with all the learned weights
 and biases. This specific one is optimized for inference-only usage.
 
-### 5. Try Out the Model
+### 6. Try Out the Model
 
 Before we jump into making an Android application with our newly saved model,
 let's first try it out. Provided is a [script](./tools/classify-hangul.py) that
@@ -315,7 +312,7 @@ Then you must change the console font to be one that supports Korean text
 (like Batang, Dotum, or Gulim).
 
 
-### 6. Create the Android Application
+### 7. Create the Android Application
 
 With the saved model, a simple Android application can be created that will be
 able to classify handwritten Hangul that a user has drawn. A completed application
@@ -405,14 +402,18 @@ then launch on the device.
 Try drawing in the application to see how well the model recognizes your Hangul
 writing.
 
-
-## Links
+# Links
 
 * [Deep MNIST for Experts](https://www.tensorflow.org/get_started/mnist/pros): Tutorial for creating and training a convolutional neural network to recognize handwritten digits.
 * [TensorFlow Mobile](https://www.tensorflow.org/mobile/): Information on TensorFlow mobile support on different platforms.
 * [Hangul Syllables](https://en.wikipedia.org/wiki/Hangul_Syllables): List of all Hangul syllables.
 
+# Learn more
 
-## License
+* **Artificial Intelligence Code Patterns**: Enjoyed this Code Pattern? Check out our other [AI Code Patterns](https://developer.ibm.com/code/technologies/artificial-intelligence/).
+* **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewObx5N7uGZ5FKH0Fde) with all of our Code Pattern videos
+* **With Watson**: Want to take your Watson app to the next level? Looking to utilize Watson Brand assets? [Join the With Watson program](https://www.ibm.com/watson/with-watson/) to leverage exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
+
+# License
 
 [Apache 2.0](LICENSE)
