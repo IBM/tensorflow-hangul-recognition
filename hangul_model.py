@@ -216,7 +216,10 @@ def main(label_file, tfrecords_dir, model_output_dir, num_train_steps):
 
     # Define our loss.
     cross_entropy = tf.reduce_mean(
-        tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y)
+        tf.nn.softmax_cross_entropy_with_logits_v2(
+            labels=tf.stop_gradient(y_),
+            logits=y
+        )
     )
 
     # Define our optimizer for minimizing our loss. Here we choose a learning

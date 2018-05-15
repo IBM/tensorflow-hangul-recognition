@@ -52,7 +52,6 @@ def classify(args):
             input_map=None,
             return_elements=None,
             name='hangul-model',
-            op_dict=None,
             producer_op_list=None
         )
 
