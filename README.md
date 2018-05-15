@@ -79,7 +79,7 @@ described in detail below.
 Clone the `tensorflow-hangul-recognition` locally. In a terminal, run:
 
 ```
-$ git clone https://github.com/IBM/tensorflow-hangul-recognition
+git clone https://github.com/IBM/tensorflow-hangul-recognition
 ```
 
 ### 2. Install Prerequisites
