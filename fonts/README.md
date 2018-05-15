@@ -3,7 +3,7 @@
 *Read this in other languages: [한국어](README-ko.md).*
 
 In this directory, you should place several different font files that support Korean text.
-The font file types should be .ttf (True Type Font). The hangul-image-generator.py script
+The font file types should be .ttf (True Type Font). The `hangul-image-generator.py` script
 will use the fonts in this directory to generate several Hangul images to be used in
 training the TensorFlow model.
 
