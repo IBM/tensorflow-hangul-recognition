@@ -93,8 +93,8 @@ Optionally, to isolate your runtime environment, use a virtual environment as de
 [here](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/).
 Create a virtual environment:
 ```
-python3 -m pip install --user virtualenv
-python3 -m virtualenv .venv
+python -m pip install --user virtualenv
+python -m virtualenv .venv
 source .venv/bin/activate
 ```
 
