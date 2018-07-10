@@ -4,7 +4,7 @@
 
 アルファベットに相当する韓国語のハングル文字には、19 個の子音と 21 個の母音があります。これらの子音と母音を組み合わせて構成できるハングルの音節と文字は合計で 11,172 個にも上ります。ただし、通常使われているのは、そのほんの一部です。
 
-このパターンでは、独自の韓国語トレーニング・データを生成するプロセスを説明した後、TensorFlow モデルをトレーニングして、手書きの、一般的なハングル文字を分類できるようにします。次に、ユーザーがモバイル・デバイス上で書いた韓国語の文字を、トレーニング済みモデルを使って認識する Android アプリケーションを作成し、実行します。このアプリケーション内で韓国語の単語または文を書くと、[Watson Language Translator](https://www.ibm.com/watson/services/language-translator/) サービスによってそれを翻訳することができます。
+このパターンでは、独自の韓国語トレーニング・データを生成するプロセスを説明した後、TensorFlow モデルをトレーニングして、手書きの、一般的なハングル文字を分類できるようにします。次に、ユーザーがモバイル・デバイス上で書いた韓国語の文字を、トレーニング済みモデルを使って認識する Android アプリケーションを作成し、実行します。このアプリケーション内で韓国語の単語または文を書くと、[Watson Language Translator](https://www.ibm.com/watson/jp-ja/developercloud/language-translator.html) サービスによってそれを翻訳することができます。
 
 ![Demo App](doc/source/images/hangul_tensordroid_demo1.gif "Android application")
 
