@@ -1,6 +1,6 @@
 # Handwritten Korean Character Recognition with TensorFlow and Android
 
-*Read this in other languages: [한국어](README-ko.md).*
+*Read this in other languages: [한국어](README-ko.md),[日本語](README-ja.md).*
 
 Hangul, the Korean alphabet, has 19 consonant and 21 vowel letters.
 Combinations of these letters give a total of 11,172 possible Hangul
