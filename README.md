@@ -1,6 +1,6 @@
 # Handwritten Korean Character Recognition with TensorFlow and Android
 
-*Read this in other languages: [한국어](README-ko.md).*
+*Read this in other languages: [한국어](README-ko.md),[日本語](README-ja.md).*
 
 Hangul, the Korean alphabet, has 19 consonant and 21 vowel letters.
 Combinations of these letters give a total of 11,172 possible Hangul
@@ -79,7 +79,7 @@ described in detail below.
 Clone the `tensorflow-hangul-recognition` locally. In a terminal, run:
 
 ```
-$ git clone https://github.com/IBM/tensorflow-hangul-recognition
+git clone https://github.com/IBM/tensorflow-hangul-recognition
 ```
 
 ### 2. Install Prerequisites
@@ -93,8 +93,8 @@ Optionally, to isolate your runtime environment, use a virtual environment as de
 [here](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/).
 Create a virtual environment:
 ```
-python3 -m pip install --user virtualenv
-python3 -m virtualenv .venv
+python -m pip install --user virtualenv
+python -m virtualenv .venv
 source .venv/bin/activate
 ```
 
