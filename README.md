@@ -95,8 +95,10 @@ Create a virtual environment:
 ```
 python -m pip install --user virtualenv
 python -m virtualenv .venv
-source .venv/bin/activate
 ```
+
+Then activate the virtual environment with `source .venv/bin/activate` on Linux/macOS or
+`.venv\Scripts\activate` on Windows.
 
 Install the python requirements for this code pattern. Run:
 ```
