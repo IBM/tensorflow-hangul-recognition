@@ -63,7 +63,7 @@ def classify(args):
     image = read_image(args.image)
     sess = tf.InteractiveSession()
     image_array = sess.run(image)
-
+    sess.close()
     with tf.Session(graph=graph) as graph_sess:
         predictions = graph_sess.run(y, feed_dict={x: image_array,
                                                    keep_prob: 1.0})
