@@ -386,8 +386,8 @@ at the top of the class.
 
 If you want to enable translation support, you must do the following:
 
-1) Create an IBM Cloud account [here](https://console.bluemix.net/registration/).
-2) Create the [Watson Language Translator](https://console.bluemix.net/catalog/services/language-translator)
+1) Create an IBM Cloud account [here](https://cloud.ibm.com/registration/).
+2) Create the [Watson Language Translator](https://cloud.ibm.com/catalog/services/language-translator)
    service.
 3) Get Translator service credentials. Credentials should have been automatically
    created. You can retrieve them by clicking on the **Language Translator** service

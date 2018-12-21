@@ -293,8 +293,8 @@ _./hangul-tensordroid/app/src/main/java/ibm/tf/hangul/_ ディレクトリにあ
 
 翻訳サポートを有効にするには、次の操作を行う必要があります:
 
-1. まだ所有していない場合、[こちら](https://console.bluemix.net/registration/) で IBM Cloud アカウントを作成する。
-2. [Watson Language Translator](https://console.bluemix.net/catalog/services/language-translator)
+1. まだ所有していない場合、[こちら](https://cloud.ibm.com/registration/) で IBM Cloud アカウントを作成する。
+2. [Watson Language Translator](https://cloud.ibm.com/catalog/services/language-translator)
    サービスを作成する。
 3. Translator サービスの資格情報を入手する。
 資格情報は自動的に作成されています。
