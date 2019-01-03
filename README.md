@@ -67,7 +67,7 @@ Follow these steps to setup and run this code pattern. The steps are
 described in detail below.
 
 1. [Clone the repo](#1-clone-the-repo)
-2. [Install Prerequisites](#2-install-prerequisites)
+2. [Install dependencies](#2-install-dependencies)
 3. [Generate Image Data](#3-generate-image-data)
 4. [Convert Images to TFRecords](#4-convert-images-to-tfrecords)
 5. [Train the Model](#5-train-the-model)
@@ -82,30 +82,34 @@ Clone the `tensorflow-hangul-recognition` locally. In a terminal, run:
 git clone https://github.com/IBM/tensorflow-hangul-recognition
 ```
 
-### 2. Install Prerequisites
+### 2. Install dependencies
 
-Go to your cloned repo directory:
+The general recommendation for Python development is to use a virtual environment [(venv)](https://docs.python.org/3/tutorial/venv.html). To install and initialize a virtual environment, use the `venv` module on Python 3 (you install the virtualenv library for Python 2.7):
+
+```bash
+# Create the virtual environment using Python. Use one of the two commands depending on your Python version.
+# Note, it may be named python3 on your system.
+
+$ python -m venv mytestenv       # Python 3.X
+$ virtualenv mytestenv           # Python 2.X
+
+# Now source the virtual environment. Use one of the two commands depending on your OS.
+
+$ source mytestenv/bin/activate  # Mac or Linux
+$ ./mytestenv/Scripts/activate   # Windows PowerShell
+```
+
+Now go to the cloned repo directory:
 ```
 cd tensorflow-hangul-recognition
 ```
 
-Optionally, to isolate your runtime environment, use a virtual environment as described
-[here](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/).
-Create a virtual environment:
-```
-python -m pip install --user virtualenv
-python -m virtualenv .venv
-```
-
-Then activate the virtual environment with `source .venv/bin/activate` on Linux/macOS or
-`.venv\Scripts\activate` on Windows.
-
-Install the python requirements for this code pattern. Run:
+Install the Python requirements for this code pattern. Run:
 ```
 pip install -r requirements.txt
 ```
 
-When you have completed the code pattern, use the `deactivate` command to leave the virtual environment.
+> **TIP** :bulb: To terminate the virtual environment use the `deactivate` command.
 
 **Note:** For Windows users, the _scipy_ package is not installable via **pip**.
 The recommended way to use _scipy_ is to install a
