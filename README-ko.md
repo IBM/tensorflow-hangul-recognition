@@ -259,8 +259,8 @@ java 폴더는 앱을 위한 모든 java 소스 코드를 담고 있습니다. �
 
 만약 번역 기능을 사용하려면 다음과 같이 해야 합니다:
 
-1) [여기](https://console.bluemix.net/registration/)에서 IBM Cloud 계정을 생성합니다.
-2) [Watson Language Translator](https://console.bluemix.net/catalog/services/language-translator) 서비스를 생성합니다.
+1) [여기](https://cloud.ibm.com/registration/)에서 IBM Cloud 계정을 생성합니다.
+2) [Watson Language Translator](https://cloud.ibm.com/catalog/services/language-translator) 서비스를 생성합니다.
 3) Translator 서비스의 신임 정보를 얻습니다. 신임 정보는 자동으로 생성됩니다. 이 정보는 IBM Cloud 대시보드의 **서비스** 영역 아래 있는 **Language Translator** 서비스를 클릭해서 얻을 수 있습니다.
 4) _[./hangul-tensordroid/app/src/main/res/values/translate_api.xml](./hangul-tensordroid/app/src/main/res/values/translate_api.xml)_
    의 **username** 과 **password** 값을 3단계에서 얻은 값으로 변경합니다.
