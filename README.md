@@ -45,14 +45,14 @@ An IBM Cloud service that converts text input in one language into a destination
 for the end user using background from domain-specific models.
 * [TensorFlow](https://www.tensorflow.org/): An open-source software library for
 Machine Intelligence.
-* [Android](https://developer.android.com/develop/index.html): An open-source mobile
+* [Android](https://developer.android.com/docs/): An open-source mobile
 operating system based on the Linux kernel.
 
 ## Featured Technologies
 
-* [Artificial Intelligence](https://developer.ibm.com/code/technologies/artificial-intelligence):
+* [Artificial Intelligence](https://developer.ibm.com/technologies/artificial-intelligence):
 Cognitive technologies that can understand, reason, learn, and interact like humans.
-* [Mobile](https://developer.ibm.com/code/technologies/mobile): An environment to
+* [Mobile](https://developer.ibm.com/technologies/mobile): An environment to
 develop apps and enable engagements that are designed specifically for mobile users.
 
 # Watch the Video
@@ -82,6 +82,11 @@ Clone the `tensorflow-hangul-recognition` locally. In a terminal, run:
 git clone https://github.com/IBM/tensorflow-hangul-recognition
 ```
 
+Now go to the cloned repo directory:
+```
+cd tensorflow-hangul-recognition
+```
+
 ### 2. Install dependencies
 
 The general recommendation for Python development is to use a virtual environment [(venv)](https://docs.python.org/3/tutorial/venv.html). To install and initialize a virtual environment, use the `venv` module on Python 3 (you install the virtualenv library for Python 2.7):
@@ -97,11 +102,6 @@ $ virtualenv mytestenv           # Python 2.X
 
 $ source mytestenv/bin/activate  # Mac or Linux
 $ ./mytestenv/Scripts/activate   # Windows PowerShell
-```
-
-Now go to the cloned repo directory:
-```
-cd tensorflow-hangul-recognition
 ```
 
 Install the Python requirements for this code pattern. Run:
@@ -341,7 +341,7 @@ has already been included in [./hangul-tensordroid](./hangul-tensordroid).
 #### Set up the project
 
 The easiest way to try the app out yourself is to use
-[Android Studio](https://developer.android.com/studio/index.html). This
+[Android Studio](https://developer.android.com/studio/). This
 will take care of a lot of the Android dependencies right inside the IDE.
 
 After downloading and installing Android Studio, perform the following steps:
@@ -425,17 +425,17 @@ writing.
 # Links
 
 * [Deep MNIST for Experts](https://www.tensorflow.org/get_started/mnist/pros): Tutorial for creating and training a convolutional neural network to recognize handwritten digits.
-* [TensorFlow Mobile](https://www.tensorflow.org/mobile/): Information on TensorFlow mobile support on different platforms.
+* [TensorFlow Lite](https://www.tensorflow.org/lite/): Information on TensorFlow mobile support on different platforms.
 * [Hangul Syllables](https://en.wikipedia.org/wiki/Hangul_Syllables): List of all Hangul syllables.
 
 # Learn more
 
-* **Artificial Intelligence Code Patterns**: Enjoyed this Code Pattern? Check out our other [AI Code Patterns](https://developer.ibm.com/code/technologies/artificial-intelligence/).
+* **Artificial Intelligence Code Patterns**: Enjoyed this Code Pattern? Check out our other [AI Code Patterns](https://developer.ibm.com/technologies/artificial-intelligence/).
 * **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewObx5N7uGZ5FKH0Fde) with all of our Code Pattern videos
 * **With Watson**: Want to take your Watson app to the next level? Looking to utilize Watson Brand assets? [Join the With Watson program](https://www.ibm.com/watson/with-watson/) to leverage exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
 
 # License
 
-This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.txt).
+This code pattern is licensed under the Apache License, Version 2. Separate third-party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1](https://developercertificate.org/) and the [Apache License, Version 2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 
-[Apache Software License (ASL) FAQ](http://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
+[Apache License FAQ](https://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
