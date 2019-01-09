@@ -398,7 +398,7 @@ If you want to enable translation support, you must do the following:
    under the **Services** section of your IBM Cloud dashboard.
 4) Update
    _[./hangul-tensordroid/app/src/main/res/values/translate_api.xml](./hangul-tensordroid/app/src/main/res/values/translate_api.xml)_
-   with the **username** and **password** retrieved in step 3.
+   with the **apikey** and **url** retrieved in step 3.
 
 #### Run the application
 

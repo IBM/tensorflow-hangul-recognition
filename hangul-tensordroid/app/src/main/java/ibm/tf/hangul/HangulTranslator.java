@@ -23,25 +23,22 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class HangulTranslator extends AsyncTask<String, Void, String> {
 
-    private static final String TRANSLATE_API_ENDPOINT =
-            "https://gateway.watsonplatform.net/language-translator/api/v2/translate";
-
     private JSONObject postData;
     private TextView view;
 
-    // These are the service provided username and password used in authenticating with the
+    // These are the service provided apikey and url used in authenticating with the
     // translate API service.
-    private String username;
-    private String password;
+    private String apikey;
+    private String url;
 
-    public HangulTranslator(Map<String, String> postData, TextView view, String username,
-                            String password) {
+    public HangulTranslator(Map<String, String> postData, TextView view, String apikey,
+                            String url) {
         if (postData != null) {
             this.postData = new JSONObject(postData);
         }
         this.view = view;
-        this.username = username;
-        this.password = password;
+        this.apikey = apikey;
+        this.url = url;
     }
 
     @Override
@@ -60,7 +57,7 @@ public class HangulTranslator extends AsyncTask<String, Void, String> {
         String result = "";
 
         try {
-            URL url = new URL(TRANSLATE_API_ENDPOINT);
+            URL url = new URL(this.url + "/v3/translate?version=2019-01-08");
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
@@ -70,7 +67,7 @@ public class HangulTranslator extends AsyncTask<String, Void, String> {
             urlConnection.setRequestMethod("POST");
 
             // Set authorization header.
-            String authString = this.username + ":" + this.password;
+            String authString = "apikey:" + this.apikey;
             byte[] base64Bytes = Base64.encode(authString.getBytes(), Base64.DEFAULT);
             String base64String = new String(base64Bytes);
             urlConnection.setRequestProperty("Authorization", "Basic " + base64String);
