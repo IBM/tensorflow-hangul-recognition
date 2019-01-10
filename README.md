@@ -50,10 +50,12 @@ operating system based on the Linux kernel.
 
 ## Featured Technologies
 
-* [Artificial Intelligence](https://developer.ibm.com/technologies/artificial-intelligence):
-Cognitive technologies that can understand, reason, learn, and interact like humans.
-* [Mobile](https://developer.ibm.com/technologies/mobile): An environment to
-develop apps and enable engagements that are designed specifically for mobile users.
+* [Artificial Intelligence](https://developer.ibm.com/technologies/artificial-intelligence/):
+  Cognitive technologies that can understand, reason, learn, and interact like
+  humans.
+* [Mobile](https://developer.ibm.com/technologies/mobile/): An environment to
+  develop apps and enable engagements that are designed specifically for mobile
+  users.
 
 # Watch the Video
 
@@ -116,7 +118,7 @@ The recommended way to use _scipy_ is to install a
 [scientific Python distribution](https://www.scipy.org/install.html#scientific-python-distributions).
 One of the more popular ones is [Anaconda](https://www.anaconda.com/download/).
 However, you can also manually install the _scipy_ package on Windows using one
-of the installers located [here](http://www.lfd.uci.edu/%7Egohlke/pythonlibs/#scipy).
+of the installers located [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy).
 
 ### 3. Generate Image Data
 
@@ -183,7 +185,7 @@ labels.
 ### 4. Convert Images to TFRecords
 
 The TensorFlow standard input format is
-[TFRecords](https://www.tensorflow.org/api_guides/python/python_io#tfrecords_format_details),
+[TFRecords](https://github.com/tensorflow/docs/tree/master/site/en/api_guides/python#tfrecords_format_details),
 which is a binary format that we can use to store raw image data and their labels
 in one place. In order to better feed in data to a TensorFlow model, let's first create
 several TFRecords files from our images. A [script](./tools/convert-to-tfrecords.py)
@@ -236,7 +238,7 @@ for correctly classifying each character. After training, the model is exported
 so that it can be used in our Android application.
 
 The model here is similar to the MNIST model described on the TensorFlow
-[website](https://www.tensorflow.org/get_started/mnist/pros). A third
+[website](https://www.tensorflow.org/tutorials/). A third
 convolutional layer is added to extract more features to help classify for the
 much greater number of classes.
 
@@ -268,8 +270,8 @@ Depending on how many images you have, this will likely take a long time to
 train (several hours to maybe even a day), especially if only training on a laptop.
 If you have access to GPUs, these will definitely help speed things up, and you
 should certainly install the TensorFlow version with GPU support (supported on
-[Ubuntu](https://www.tensorflow.org/install/install_linux) and
-[Windows](https://www.tensorflow.org/install/install_windows) only).
+[Ubuntu](https://www.tensorflow.org/install/) and
+[Windows](https://www.tensorflow.org/install/) only).
 
 On my Windows desktop computer with an Nvidia GTX 1080 graphics card, training
 about 320,000 images with the script defaults took just a bit over two hours.
@@ -409,7 +411,7 @@ button at the top of Android Studio.
 
 This should prompt a window to **Select Deployment Target**. If you have an actual
 Android device, feel free to plug it into your computer using USB. More info can be
-found [here](https://developer.android.com/studio/run/device.html). If you do not
+found [here](https://developer.android.com/studio/run/device). If you do not
 have an Android device, you can alternatively use an emulator. In the
 **Select Deployment Target** window, click on **Create New Virtual Device**. Then
 just follow the wizard, selecting a device definition and image (preferably an
@@ -424,7 +426,7 @@ writing.
 
 # Links
 
-* [Deep MNIST for Experts](https://www.tensorflow.org/get_started/mnist/pros): Tutorial for creating and training a convolutional neural network to recognize handwritten digits.
+* [Deep MNIST for Experts](https://www.tensorflow.org/tutorials/): Tutorial for creating and training a convolutional neural network to recognize handwritten digits.
 * [TensorFlow Lite](https://www.tensorflow.org/lite/): Information on TensorFlow mobile support on different platforms.
 * [Hangul Syllables](https://en.wikipedia.org/wiki/Hangul_Syllables): List of all Hangul syllables.
 
