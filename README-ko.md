@@ -87,9 +87,9 @@ pip install -r requirements.txt
 이 스크립트는 라벨 파일로 주어지는 각각의 문자에 대한 이미지를 생성하기 위해 fonts 디렉토리에 있는 글꼴들을 사용합니다. 기본 라벨 파일은 [2350-common-hangul.txt](./labels/2350-common-hangul.txt)로 [KS X 1001 encoding](https://en.wikipedia.org/wiki/KS_X_1001)에서 가지고 온 주요 사용 글자 2350자를 포함하고 있습니다. 다른 라벨 파일들은 [256-common-hangul.txt](./labels/256-common-hangul.txt) 와
 [512-common-hangul.txt](./labels/512-common-hangul.txt)이 있습니다.
 이 파일들은 국립국어원에 의해 편집된 기본 어휘 6000단어 목록([여기](https://www.topikguide.com/download/6000_korean_words.htm))에서 가져왔습니다.
-훈련용 컴퓨터 머신이 고성능이 아닌 경우, 좀 더 적은양의 라벨 세트를 사용하는 것이 나중에 전체 모델의 훈련 시할 수간을 줄이는 데 도움이 될 수 있습니다.
+훈련용 컴퓨터 머신이 고성능이 아닌 경우, 좀 더 적은양의 라벨 세트를 사용하는 것이 나중에 전체 모델의 훈련 시간을 줄이는 데 도움이 될 수 있습니다.
 
-[fonts](./fonts) 폴더는 현재는 비어있는데, 한글 데이터 세트를 생성하기 전에 fonts 디렉토리에 있는 [README](./fonts/README.md)에 설명해 놓은 글꼴 파일을 반드시 먼저 다운로드 해 놓아야 합니다.
+[fonts](./fonts) 폴더는 현재는 비어있는데, 한글 데이터 세트를 생성하기 전에 fonts 디렉토리에 있는 [README](./fonts/README-ko.md)에 설명해 놓은 글꼴 파일을 반드시 먼저 다운로드 해 놓아야 합니다.
 제가 사용한 데이터 세트는 대략 40가지의 글꼴 파일을 사용하였지만 여러분의 데이터 세트를 더 좋게 만들고 싶다면 더 많은 파일을 사용할 수 있습니다. 특히 몇몇 독특한 스타일을 갖고 있다면 더욱 그렇습니다.
 fonts 디렉토리가 채워지면, [hangul-image-generator.py](./tools/hangul-image-generator.py)로 실제 이미지 생성 단계를 진행할 수 있습니다.
 
@@ -169,7 +169,7 @@ test1.tfrecords    train1.tfrecords    train2.tfrecords    train3.tfrecords
   적어도 15세대만큼은 실행될 수 있도록 이 옵션 값을 확실하게 조절하십시오.
   기본 값은 _30000_ 단계입니다.
 
-이 훈련을 실해하려면, 이 프로젝트의 최상위 디렉토리에서 다음과 같이 실행하십시오:
+이 훈련을 실행하려면, 이 프로젝트의 최상위 디렉토리에서 다음과 같이 실행하십시오:
 
 ```
 python ./hangul_model.py --label-file <your label file path> --num-train-steps <num>
