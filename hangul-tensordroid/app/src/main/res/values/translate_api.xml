@@ -1,5 +1,5 @@
 <resources>
-    <!-- The username and password provided by the Watson Language Translator service. -->
+    <!-- The apikey and url provided by the Watson Language Translator service. -->
     <string name="apikey"></string>
     <string name="url"></string>
 </resources>
