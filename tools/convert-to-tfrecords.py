@@ -90,7 +90,7 @@ class TFRecordsConverter(object):
         for i in indices:
             filename = self.filenames[i]
             label = self.labels[i]
-            with tf.gfile.FastGFile(filename, 'rb') as f:
+            with tf.gfile.GFile(filename, 'rb') as f:
                 im_data = f.read()
 
             # Example is a data format that contains a key-value store, where

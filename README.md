@@ -111,14 +111,11 @@ Install the Python requirements for this code pattern. Run:
 pip install -r requirements.txt
 ```
 
-> **TIP** :bulb: To terminate the virtual environment use the `deactivate` command.
+> **Note**: If you have an Nvidia GPU and want to use it in training, then you will need to
+install `tensorflow-gpu` instead of `tensorflow`. Details for installation can be found
+[here](https://www.tensorflow.org/install/gpu).
 
-**Note:** For Windows users, the _scipy_ package is not installable via **pip**.
-The recommended way to use _scipy_ is to install a
-[scientific Python distribution](https://www.scipy.org/install.html#scientific-python-distributions).
-One of the more popular ones is [Anaconda](https://www.anaconda.com/download/).
-However, you can also manually install the _scipy_ package on Windows using one
-of the installers located [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy).
+> **TIP** :bulb: To terminate the virtual environment use the `deactivate` command.
 
 ### 3. Generate Image Data
 
@@ -251,19 +248,15 @@ Optional flags for this script are:
   Default is _./tfrecords-output_.
 * `--output-dir` for specifying the output directory to store model checkpoints,
    graphs, and Protocol Buffer files. Default is _./saved-model_.
-* `--num-train-steps` for specifying the number of training steps to perform.
-  This should be increased with more data (or vice versa). The number of steps
-  should cover several iterations over all of the training data (epochs).
-  For example, if I had 320,000 images in my training set, one epoch would be
-  _320000/100 = 3200_ steps where _100_ is the default batch size. So, if I wanted
-  to train for 30 epochs, I would simply do _3200*30 = 96000_ training steps.
-  Definitely tune this parameter on your own to try and hit at least 15 epochs.
-  Default is _30000_ steps.
+* `--num-train-epochs` for specifying the number of epochs to train for.
+  This is the number of complete passes through the training dataset.
+  Definitely try tuning this parameter to improve model performance on your dataset.
+  Default is 15 epochs.
 
 To run the training, simply do the following from the root of the project:
 
 ```
-python ./hangul_model.py --label-file <your label file path> --num-train-steps <num>
+python ./hangul_model.py --label-file <your label file path> --num-train-epochs <num>
 ```
 
 Depending on how many images you have, this will likely take a long time to

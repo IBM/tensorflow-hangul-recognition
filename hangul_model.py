@@ -21,30 +21,14 @@ MODEL_NAME = 'hangul_tensorflow'
 IMAGE_WIDTH = 64
 IMAGE_HEIGHT = 64
 
-DEFAULT_NUM_TRAIN_STEPS = 30000
+DEFAULT_NUM_EPOCHS = 15
 BATCH_SIZE = 100
 
+# This will be determined by the number of entries in the given label file.
+num_classes = 2350
 
-def get_image(files, num_classes):
-    """This method defines the retrieval image examples from TFRecords files.
 
-    Here we will define how the images will be represented (grayscale,
-    flattened, floating point arrays) and how labels will be represented
-    (one-hot vectors).
-    """
-
-    # Convert filenames to a queue for an input pipeline.
-    file_queue = tf.train.string_input_producer(files)
-
-    # Create object to read TFRecords.
-    reader = tf.TFRecordReader()
-
-    # Read the full set of features for a single example.
-    key, example = reader.read(file_queue)
-
-    # Parse the example to get a dict mapping feature keys to tensors.
-    # image/class/label: integer denoting the index in a classification layer.
-    # image/encoded: string containing JPEG encoded image
+def _parse_function(example):
     features = tf.parse_single_example(
         example,
         features={
@@ -52,7 +36,6 @@ def get_image(files, num_classes):
             'image/encoded': tf.FixedLenFeature([], dtype=tf.string,
                                                 default_value='')
         })
-
     label = features['image/class/label']
     image_encoded = features['image/encoded']
 
@@ -63,7 +46,7 @@ def get_image(files, num_classes):
 
     # Represent the label as a one hot vector.
     label = tf.stack(tf.one_hot(label, num_classes))
-    return label, image
+    return image, label
 
 
 def export_model(model_output_dir, input_node_names, output_node_name):
@@ -94,7 +77,7 @@ def export_model(model_output_dir, input_node_names, output_node_name):
 
     optimized_graph_file = os.path.join(model_output_dir,
                                         'optimized_' + MODEL_NAME + '.pb')
-    with tf.gfile.FastGFile(optimized_graph_file, "wb") as f:
+    with tf.gfile.GFile(optimized_graph_file, "wb") as f:
         f.write(output_graph_def.SerializeToString())
 
     print("Inference optimized graph saved at: " + optimized_graph_file)
@@ -102,7 +85,7 @@ def export_model(model_output_dir, input_node_names, output_node_name):
 
 def weight_variable(shape):
     """Generates a weight variable of a given shape."""
-    initial = tf.truncated_normal(shape, stddev=0.1)
+    initial = tf.random.truncated_normal(shape, stddev=0.1)
     return tf.Variable(initial, name='weight')
 
 
@@ -112,7 +95,7 @@ def bias_variable(shape):
     return tf.Variable(initial, name='bias')
 
 
-def main(label_file, tfrecords_dir, model_output_dir, num_train_steps):
+def main(label_file, tfrecords_dir, model_output_dir, num_train_epochs):
     """Perform graph definition and model training.
 
     Here we will first create our input pipeline for reading in TFRecords
@@ -136,22 +119,17 @@ def main(label_file, tfrecords_dir, model_output_dir, num_train_steps):
 
     tf_record_pattern = os.path.join(tfrecords_dir, '%s-*' % 'train')
     train_data_files = tf.gfile.Glob(tf_record_pattern)
-    label, image = get_image(train_data_files, num_classes)
 
     tf_record_pattern = os.path.join(tfrecords_dir, '%s-*' % 'test')
     test_data_files = tf.gfile.Glob(tf_record_pattern)
-    tlabel, timage = get_image(test_data_files, num_classes)
 
-    # Associate objects with a randomly selected batch of labels and images.
-    image_batch, label_batch = tf.train.shuffle_batch(
-        [image, label], batch_size=BATCH_SIZE,
-        capacity=2000,
-        min_after_dequeue=1000)
-
-    # Do the same for the testing data.
-    timage_batch, tlabel_batch = tf.train.batch(
-        [timage, tlabel], batch_size=BATCH_SIZE,
-        capacity=2000)
+    # Create training dataset input pipeline.
+    train_dataset = tf.data.TFRecordDataset(train_data_files) \
+        .map(_parse_function) \
+        .shuffle(1000) \
+        .repeat(num_train_epochs) \
+        .batch(BATCH_SIZE) \
+        .prefetch(1)
 
     # Create the model!
 
@@ -204,7 +182,7 @@ def main(label_file, tfrecords_dir, model_output_dir, num_train_steps):
 
     # Dropout layer. This helps fight overfitting.
     keep_prob = tf.placeholder(tf.float32, name=keep_prob_node_name)
-    h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+    h_fc1_drop = tf.nn.dropout(h_fc1, rate=1-keep_prob)
 
     # Classification layer.
     W_fc2 = weight_variable([1024, num_classes])
@@ -239,73 +217,82 @@ def main(label_file, tfrecords_dir, model_output_dir, num_train_steps):
         # Initialize the variables.
         sess.run(tf.global_variables_initializer())
 
-        # Initialize the queue threads.
-        coord = tf.train.Coordinator()
-        threads = tf.train.start_queue_runners(coord=coord)
-
         checkpoint_file = os.path.join(model_output_dir, MODEL_NAME + '.chkp')
 
         # Save the graph definition to a file.
         tf.train.write_graph(sess.graph_def, model_output_dir,
                              MODEL_NAME + '.pbtxt', True)
 
-        for step in range(num_train_steps):
-            # Get a random batch of images and labels.
-            train_images, train_labels = sess.run([image_batch, label_batch])
+        try:
+            iterator = train_dataset.make_one_shot_iterator()
+            batch = iterator.get_next()
+            step = 0
 
-            # Perform the training step, feeding in the batches.
-            sess.run(train_step, feed_dict={x: train_images, y_: train_labels,
-                                            keep_prob: 0.5})
+            while True:
 
-            # Print the training accuracy every 100 iterations.
-            if step % 100 == 0:
-                train_accuracy = sess.run(
-                    accuracy,
-                    feed_dict={x: train_images, y_: train_labels,
-                               keep_prob: 1.0}
-                )
-                print("Step %d, Training Accuracy %g" %
-                      (step, float(train_accuracy)))
+                # Get a batch of images and their corresponding labels.
+                train_images, train_labels = sess.run(batch)
 
-            # Every 10,000 iterations, we save a checkpoint of the model.
-            if step % 10000 == 0:
-                saver.save(sess, checkpoint_file, global_step=step)
+                # Perform the training step, feeding in the batches.
+                sess.run(train_step, feed_dict={x: train_images,
+                                                y_: train_labels,
+                                                keep_prob: 0.5})
+                if step % 100 == 0:
+                    train_accuracy = sess.run(
+                        accuracy,
+                        feed_dict={x: train_images, y_: train_labels,
+                                   keep_prob: 1.0}
+                    )
+                    print("Step %d, Training Accuracy %g" %
+                          (step, float(train_accuracy)))
+
+                # Every 10,000 iterations, we save a checkpoint of the model.
+                if step % 10000 == 0:
+                    saver.save(sess, checkpoint_file, global_step=step)
+
+                step += 1
+
+        except tf.errors.OutOfRangeError:
+            pass
 
         # Save a checkpoint after training has completed.
         saver.save(sess, checkpoint_file)
 
-        # Get number of samples in test set.
-        sample_count = 0
-        for f in test_data_files:
-            sample_count += sum(1 for _ in tf.python_io.tf_record_iterator(f))
-
         # See how model did by running the testing set through the model.
         print('Testing model...')
 
-        # We will run the test set through batches and sum the total number
-        # of correct predictions.
-        num_batches = int(sample_count/BATCH_SIZE) or 1
-        total_correct_preds = 0
+        # Create testing dataset input pipeline.
+        test_dataset = tf.data.TFRecordDataset(test_data_files) \
+            .map(_parse_function) \
+            .batch(BATCH_SIZE) \
+            .prefetch(1)
 
         # Define a different tensor operation for summing the correct
         # predictions.
         accuracy2 = tf.reduce_sum(correct_prediction)
-        for step in range(num_batches):
-            image_batch2, label_batch2 = sess.run([timage_batch, tlabel_batch])
-            acc = sess.run(accuracy2, feed_dict={x: image_batch2,
-                                                 y_: label_batch2,
-                                                 keep_prob: 1.0})
-            total_correct_preds += acc
+        total_correct_preds = 0
+        total_preds = 0
 
-        accuracy_percent = total_correct_preds/(num_batches*BATCH_SIZE)
-        print("Testing Accuracy {}".format(accuracy_percent))
+        try:
+            iterator = test_dataset.make_one_shot_iterator()
+            batch = iterator.get_next()
+            while True:
+                test_images, test_labels = sess.run(batch)
+                acc = sess.run(accuracy2, feed_dict={x: test_images,
+                                                     y_: test_labels,
+                                                     keep_prob: 1.0})
+                total_preds += len(test_images)
+                total_correct_preds += acc
+
+        except tf.errors.OutOfRangeError:
+            pass
+
+        test_accuracy = total_correct_preds/total_preds
+        print("Testing Accuracy {}".format(test_accuracy))
 
         export_model(model_output_dir, [input_node_name, keep_prob_node_name],
                      output_node_name)
 
-        # Stop queue threads and close session.
-        coord.request_stop()
-        coord.join(threads)
         sess.close()
 
 
@@ -320,16 +307,11 @@ if __name__ == '__main__':
     parser.add_argument('--output-dir', type=str, dest='output_dir',
                         default=DEFAULT_OUTPUT_DIR,
                         help='Output directory to store saved model files.')
-    parser.add_argument('--num-train-steps', type=int, dest='num_train_steps',
-                        default=DEFAULT_NUM_TRAIN_STEPS,
-                        help='Number of training steps to perform. This value '
-                             'should be increased with more data. The number '
-                             'of steps should cover several iterations over '
-                             'all of the training data (epochs). Example: If '
-                             'you have 15000 images in the training set, one '
-                             'epoch would be 15000/100 = 150 steps where 100 '
-                             'is the batch size. So, for 10 epochs, you would '
-                             'put 150*10 = 1500 steps.')
+    parser.add_argument('--num-train-epochs', type=int,
+                        dest='num_train_epochs',
+                        default=DEFAULT_NUM_EPOCHS,
+                        help='Number of times to iterate over all of the '
+                             'training data.')
     args = parser.parse_args()
     main(args.label_file, args.tfrecords_dir,
-         args.output_dir, args.num_train_steps)
+         args.output_dir, args.num_train_epochs)
