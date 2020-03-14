@@ -23,7 +23,7 @@ def read_image(file):
     file_content = tf.read_file(file)
     image = tf.image.decode_jpeg(file_content, channels=1)
     image = tf.image.convert_image_dtype(image, dtype=tf.float32)
-    image = tf.reshape(image, [64*64])
+    image = tf.reshape(image, (1, 64*64))
     return image
 
 

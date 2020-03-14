@@ -103,6 +103,7 @@ def main(label_file, tfrecords_dir, model_output_dir, num_train_epochs):
     Next, a convolutional neural network is defined, and training is performed.
     After training, the model is exported to be used in applications.
     """
+    global num_classes
     labels = io.open(label_file, 'r', encoding='utf-8').read().splitlines()
     num_classes = len(labels)
 
