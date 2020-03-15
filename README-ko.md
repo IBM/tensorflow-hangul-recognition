@@ -163,16 +163,12 @@ test1.tfrecords    train1.tfrecords    train2.tfrecords    train3.tfrecords
 * `--tfrecords-dir` TFRecords 샤드를 담게되는 디렉토리를 지정합니다.
   기본 값은 _./tfrecords-output_ 입니다.
 * `--output-dir` 모델 checkpoint, graph 그리고 프로토콜 버퍼 파일 저장을 위한 디렉토리를 지정합니다. 기본 값은 _./saved-model_ 입니다.
-* `--num-train-steps` 수행할 훈련 단계의 갯수를 지정합니다.
-  이는 데이터가 많아질 수록 증가해야 합니다(반대의 경우도 마찬가지). 단계의 갯수는 전체 훈련 데이터 (세대, epoch)에 걸쳐 몇 번정도 반복 될 수 있도록 해야 합니다.
-  예를 들어 훈련용 세트에 320,000 개의 이미지를 가지고 있는 경우라면 하나의 세대(epoch)는 기본 일괄처리 데이터 크기인 _100_ 을 기준으로 _320000/100 = 3200_ 단계가 됩니다. 그러므로, 만약 30세대 정도 훈련한다면, 단순하게 _3200*30 = 96000_ 의 훈련 단계를 수행하면 됩니다.
-  적어도 15세대만큼은 실행될 수 있도록 이 옵션 값을 확실하게 조절하십시오.
-  기본 값은 _30000_ 단계입니다.
+* `--num-train-epochs` 교육할 epoch 수를 지정하는 데 사용됩니다. 이는 교육 데이터 세트를 통과하는 전체 합격 횟수입니다. 데이터 세트에서 모델 성능을 향상시키려면 반드시 이 매개 변수를 조정해야 합니다. 기본값은 15개입니다.
 
 이 훈련을 실행하려면, 이 프로젝트의 최상위 디렉토리에서 다음과 같이 실행하십시오:
 
 ```
-python ./hangul_model.py --label-file <your label file path> --num-train-steps <num>
+python ./hangul_model.py --label-file <your label file path> --num-train-epochs <num>
 ```
 
 이미지를 얼마나 많이 가지고 있는지에 따라, 훈련에 걸리는 시간이 길어집니다 (몇 시간에서 하루가 걸리기도 합니다). 특히 랩톱 컴퓨터의 경우에 더 그렇습니다.
