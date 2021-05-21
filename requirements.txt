@@ -1,6 +1,6 @@
 # NOTE(pvaneck): tensorflow requires a lower version of numpy than the latest, so just use the
 # version that tensorflow wants by removing the numpy dependency in this file.
 #numpy>=1.12.1
-tensorflow==1.13.1
+tensorflow==2.5.0
 Pillow>=4.1.1
 scipy>=0.18.1
