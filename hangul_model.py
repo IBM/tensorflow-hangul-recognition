@@ -126,7 +126,7 @@ def main(label_file, tfrecords_dir, model_output_dir, num_train_epochs):
 
     # Create training dataset input pipeline.
     train_dataset = tf.data.TFRecordDataset(train_data_files) \
-        .map(_parse_function) \
+        .map(_parse_function,num_parallel_calls=tf.data.experimental.AUTOTUNE) \
         .shuffle(1000) \
         .repeat(num_train_epochs) \
         .batch(BATCH_SIZE) \
@@ -264,7 +264,7 @@ def main(label_file, tfrecords_dir, model_output_dir, num_train_epochs):
 
         # Create testing dataset input pipeline.
         test_dataset = tf.data.TFRecordDataset(test_data_files) \
-            .map(_parse_function) \
+            .map(_parse_function,num_parallel_calls=tf.data.experimental.AUTOTUNE) \
             .batch(BATCH_SIZE) \
             .prefetch(1)
 
